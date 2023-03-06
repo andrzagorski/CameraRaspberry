@@ -1,0 +1,97 @@
+package org.example;
+import net.miginfocom.swing.MigLayout;
+import org.bytedeco.javacv.CanvasFrame;
+import org.bytedeco.javacv.Frame;
+import org.bytedeco.javacv.FrameGrabber;
+import org.bytedeco.javacv.OpenCVFrameGrabber;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.core.Size;
+import org.opencv.imgcodecs.Imgcodecs;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+
+import static org.opencv.imgcodecs.Imgcodecs.imread;
+import static org.opencv.imgproc.Imgproc.INTER_AREA;
+import static org.opencv.imgproc.Imgproc.resize;
+
+
+public class Main {
+
+    public static void initCam(FrameGrabber cam) throws InterruptedException {
+        cam.setImageWidth(640);
+        cam.setImageHeight(480);
+
+        Thread.sleep(10);
+    }
+
+
+    static BufferedImage Mat2BufferedImage(Mat matrix)throws Exception {
+        MatOfByte mob= new MatOfByte();
+        Imgcodecs.imencode(".jpg", matrix, mob);
+        byte[] ba = mob.toArray();
+
+        return ImageIO.read(new ByteArrayInputStream(ba));
+    }
+
+
+    public static void main(String[] args) {
+
+        final String[] id = {"1"};
+
+        String[] cams = {"1", "2", "3"};
+
+        JComboBox<String> jComboBox = new JComboBox<>();
+
+        for (String s : cams)
+            jComboBox.addItem(s);
+
+        jComboBox.setBounds(80, 50, 225, 20);
+
+
+        JButton ButtonGrab = new JButton("Show image");
+        ButtonGrab.setBounds(20, 140, 130, 20);
+
+        CanvasFrame window = new CanvasFrame("Title");
+
+        window.setLayout(new MigLayout("insets 0, gap 10", "grow", "grow"));
+
+        window.add(jComboBox);
+        window.add(ButtonGrab);
+
+
+        jComboBox.addItemListener(e -> id[0] = jComboBox.getSelectedItem().toString());
+
+        ButtonGrab.addActionListener(e -> {
+
+            FrameGrabber cam = new OpenCVFrameGrabber(Integer.parseInt(id[0]));
+        while(true) {
+
+            try {
+                initCam(cam);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+
+            Frame frame = null;
+            try {
+                cam.start();
+
+                frame = cam.grab();
+            } catch (FrameGrabber.Exception ex) {
+                throw new RuntimeException(ex);
+            }
+
+            window.showImage(frame);
+
+//            try {
+//                Thread.sleep(10);
+//            } catch (InterruptedException ex) {
+//                throw new RuntimeException(ex);
+//            }
+        }
+
+        });
+    }
