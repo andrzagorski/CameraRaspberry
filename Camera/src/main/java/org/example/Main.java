@@ -21,26 +21,15 @@ public class Main {
     public static void main(String[] args) throws FrameGrabber.Exception {
 
 
-
-        Webcam webcam = Webcam.getDefault();
-        Dimension OnlyToView = new Dimension(640,480);
-
-
-        webcam.setViewSize(OnlyToView);
-         WebcamPanel panel = new WebcamPanel(webcam);
-
-        panel.setImageSizeDisplayed(true);
-
-        panel.setBounds(400,50,640,480);
-        JComboBox<String> jComboBox = new JComboBox<>();
+        JComboBox<String> listOfCameras = new JComboBox<>();
 
         for (int i=0;i<Webcam.getWebcams().size();i++) {
-            jComboBox.addItem(Webcam.getWebcams().get(i).toString());
+            listOfCameras.addItem(Webcam.getWebcams().get(i).toString());
         }
-        jComboBox.setBounds(80, 50, 225, 20);
+        listOfCameras.setBounds(80, 50, 225, 20);
 
-        JButton jButton = new JButton("Wybierz");
-        jButton.setBounds(100, 100, 90, 20);
+        JButton jButtonChooseCamera = new JButton("Wybierz");
+        jButtonChooseCamera.setBounds(100, 100, 90, 20);
 
         JButton ButtonGrab = new JButton("Save Image!");
         ButtonGrab.setBounds(20, 140, 130, 20);
@@ -52,10 +41,10 @@ public class Main {
 
 
         JFrame window = new JFrame("Webcam");
-        window.add(panel);
 
-        window.add(jButton);
-        window.add(jComboBox);
+
+        window.add(jButtonChooseCamera);
+        window.add(listOfCameras);
         window.add(ButtonGrab);
 
         window.add(jLabel);
@@ -65,26 +54,46 @@ public class Main {
         window.pack();
         window.setSize(1280,1024);
         window.setVisible(true);
+        window.setLayout(new FlowLayout());
+        JPanel mainPanel = new JPanel(new FlowLayout());
+        window.add(mainPanel);
 
 
 
 
-        jButton.addActionListener(new ActionListener() {
+        jButtonChooseCamera.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                panel.stop();
-                window.remove(panel);
+                String chosenCamera = listOfCameras.getSelectedItem().toString();
+                Webcam webcam = null;
+                // KAMERA
+                if(chosenCamera != null) {       // jesli uzytkownik wybral kamere
+                    for (int i = 0; i < Webcam.getWebcams().size(); i++) {
+                        if (chosenCamera.contains(Webcam.getWebcams().get(i).getName())) {
+                            webcam = Webcam.getWebcams().get(i);
+                        }
+                    }
+                }
 
-               // Webcam cam2 =Webcam.getWebcamByName(jComboBox.getSelectedItem().toString());
-                /*Webcam cam2 = Webcam.getWebcamByName("Live! Cam Sync 1080p");
-                System.out.println(Webcam.getWebcams());
-                WebcamPanel pan2=new WebcamPanel(cam2);
-                pan2.setBounds(400,50,640,480); // exactly the same as panel 0 !!
-                window.add(pan2);
-*/
-                String selectedFruit = "You selected " + jComboBox.getSelectedItem().toString();
-                jLabel.setText(selectedFruit);
+
+                if(webcam != null){
+                    WebcamPanel webcamPanel = new WebcamPanel(webcam);
+                    webcamPanel.setPreferredSize(new Dimension(640, 480));
+
+                    mainPanel.add(webcamPanel);
+                    mainPanel.setPreferredSize(new Dimension(800, 600)); // preferowana wielkość dla panelu nadrzędnego
+
+                    window.pack();
+                    window.setVisible(true);
+
+                }
+                else {
+                    JOptionPane.showMessageDialog(window, "Nie znaleziono kamery ");
+                }
+
+                String selectedFruit = "You selected " + listOfCameras.getSelectedItem().toString();
+                //jLabel.setText(selectedFruit);
             }
         });
 
@@ -92,9 +101,10 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+
                 // grabbing an image.
-                System.out.println(jComboBox.getSelectedIndex());
-                FrameGrabber grabber = new OpenCVFrameGrabber(jComboBox.getSelectedIndex());
+                System.out.println(listOfCameras.getSelectedIndex());
+                FrameGrabber grabber = new OpenCVFrameGrabber(listOfCameras.getSelectedIndex());
                 grabber.setImageWidth(9152);
                 grabber.setImageHeight(6944);
                 try {
