@@ -10,11 +10,14 @@ import org.bytedeco.javacv.OpenCVFrameGrabber;
 import org.bytedeco.opencv.global.opencv_imgcodecs;
 import org.bytedeco.opencv.opencv_core.IplImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
@@ -57,31 +60,30 @@ public class Main {
         window.setLayout(new FlowLayout());
         JPanel mainPanel = new JPanel(new FlowLayout());
         window.add(mainPanel);
-
-
+        final WebcamPanel[] webcamPanel = {null};
+        final Webcam[] webcam = {null};
 
 
         jButtonChooseCamera.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+            if(webcamPanel[0] == null){
                 String chosenCamera = listOfCameras.getSelectedItem().toString();
-                Webcam webcam = null;
+
                 // KAMERA
                 if(chosenCamera != null) {       // jesli uzytkownik wybral kamere
                     for (int i = 0; i < Webcam.getWebcams().size(); i++) {
                         if (chosenCamera.contains(Webcam.getWebcams().get(i).getName())) {
-                            webcam = Webcam.getWebcams().get(i);
+                            webcam[0] = Webcam.getWebcams().get(i);
                         }
                     }
                 }
 
 
-                if(webcam != null){
-                    WebcamPanel webcamPanel = new WebcamPanel(webcam);
-                    webcamPanel.setPreferredSize(new Dimension(640, 480));
-
-                    mainPanel.add(webcamPanel);
+                if(webcam[0] != null){
+                    webcamPanel[0] = new WebcamPanel(webcam[0]);
+                    webcamPanel[0].setPreferredSize(new Dimension(640, 480));
+                    mainPanel.add(webcamPanel[0]);
                     mainPanel.setPreferredSize(new Dimension(800, 600)); // preferowana wielkość dla panelu nadrzędnego
 
                     window.pack();
@@ -93,43 +95,27 @@ public class Main {
                 }
 
                 String selectedFruit = "You selected " + listOfCameras.getSelectedItem().toString();
-                //jLabel.setText(selectedFruit);
-            }
+                jLabel.setText(selectedFruit);
+            }}
         });
 
        ButtonGrab.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
-                // grabbing an image.
-                System.out.println(listOfCameras.getSelectedIndex());
-                FrameGrabber grabber = new OpenCVFrameGrabber(listOfCameras.getSelectedIndex());
-                grabber.setImageWidth(9152);
-                grabber.setImageHeight(6944);
-                try {
-                    grabber.start();
-
-                } catch (FrameGrabber.Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-                Frame frame = null;
-                try {
-                    frame = grabber.grab();
-                } catch (FrameGrabber.Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-
-                OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
-                IplImage img = converter.convert(frame);
-
+                webcamPanel[0].pause();
+                BufferedImage captured =  webcamPanel[0].getImage();
                 JFileChooser fileChooser = new JFileChooser();
                 if (fileChooser.showSaveDialog(window) == JFileChooser.APPROVE_OPTION) {
                     File file = fileChooser.getSelectedFile();
-                    opencv_imgcodecs.cvSaveImage(file.toString(),img);
+                try {
+                ImageIO.write(captured, "png", file);
+                } catch (IOException f) {
+                        f.printStackTrace();
+                        }
+
                 }
-
-
+                webcamPanel[0].resume();
 
             }
         });
