@@ -63,46 +63,96 @@ public class Main {
         final WebcamPanel[] webcamPanel = {null};
         final Webcam[] webcam = {null};
 
-
+        if(webcamPanel[0] == null){
         jButtonChooseCamera.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            if(webcamPanel[0] == null){
-                String chosenCamera = listOfCameras.getSelectedItem().toString();
+            Runnable runnableCapturingVideo = new Runnable() {
+                @Override
+                public void run() {
+                    String chosenCamera = listOfCameras.getSelectedItem().toString();
 
-                // KAMERA
-                if(chosenCamera != null) {       // jesli uzytkownik wybral kamere
-                    for (int i = 0; i < Webcam.getWebcams().size(); i++) {
-                        if (chosenCamera.contains(Webcam.getWebcams().get(i).getName())) {
-                            webcam[0] = Webcam.getWebcams().get(i);
+                    // KAMERA
+                    if(chosenCamera != null) {       // jesli uzytkownik wybral kamere
+                        for (int i = 0; i < Webcam.getWebcams().size(); i++) {
+                            if (chosenCamera.contains(Webcam.getWebcams().get(i).getName())) {
+                                webcam[0] = Webcam.getWebcams().get(i);
+                            }
                         }
                     }
+                    synchronized (webcam[0]){
+                        if(webcam[0] != null){
+                            webcamPanel[0] = new WebcamPanel(webcam[0]);
+                            webcamPanel[0].setPreferredSize(new Dimension(640, 480));
+                            mainPanel.add(webcamPanel[0]);
+                            mainPanel.setPreferredSize(new Dimension(800, 600)); // preferowana wielkość dla panelu nadrzędnego
+
+                            window.pack();
+                            window.setVisible(true);
+
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(window, "Nie znaleziono kamery ");
+                        }
+
+                        String selectedFruit = "You selected " + listOfCameras.getSelectedItem().toString();
+                        jLabel.setText(selectedFruit );
+                    }
                 }
-
-
-                if(webcam[0] != null){
-                    webcamPanel[0] = new WebcamPanel(webcam[0]);
-                    webcamPanel[0].setPreferredSize(new Dimension(640, 480));
-                    mainPanel.add(webcamPanel[0]);
-                    mainPanel.setPreferredSize(new Dimension(800, 600)); // preferowana wielkość dla panelu nadrzędnego
-
-                    window.pack();
-                    window.setVisible(true);
-
-                }
-                else {
-                    JOptionPane.showMessageDialog(window, "Nie znaleziono kamery ");
-                }
-
-                String selectedFruit = "You selected " + listOfCameras.getSelectedItem().toString();
-                jLabel.setText(selectedFruit);
-            }}
+            };
+                new Thread(runnableCapturingVideo).start();
+            }
         });
+        }
 
        ButtonGrab.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                Runnable runnableCapturingImage = new Runnable() {
+                    @Override
+                    public void run() {
+                        synchronized (webcam[0]){
+                            // grabbing an image.
+                            System.out.println(listOfCameras.getSelectedIndex());
+                            FrameGrabber grabber = new OpenCVFrameGrabber(listOfCameras.getSelectedIndex());
+                            grabber.setImageWidth(9152);
+                            grabber.setImageHeight(6944);
+                            try {
+                                grabber.start();
+
+                            } catch (FrameGrabber.Exception ex) {
+                                throw new RuntimeException(ex);
+                            }
+                            Frame frame = null;
+                            try {
+                                frame = grabber.grab();
+                            } catch (FrameGrabber.Exception ex) {
+                                throw new RuntimeException(ex);
+                            }
+
+                            OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
+                            IplImage img = converter.convert(frame);
+
+                            JFileChooser fileChooser = new JFileChooser();
+                            if (fileChooser.showSaveDialog(window) == JFileChooser.APPROVE_OPTION) {
+                                File file = fileChooser.getSelectedFile();
+                                opencv_imgcodecs.cvSaveImage(file.toString(),img);
+                            }
+
+                        }
+
+                    }
+                };
+                try{new Thread(runnableCapturingImage).start();}
+                catch (Exception exception){
+                // wyjatek
+                }
+
+
+
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////
+                /* Methodology to capture one frame from video, needs proceeding video in high resolution in preview!!!
                 webcamPanel[0].pause();
                 BufferedImage captured =  webcamPanel[0].getImage();
                 JFileChooser fileChooser = new JFileChooser();
@@ -116,7 +166,8 @@ public class Main {
 
                 }
                 webcamPanel[0].resume();
-
+                */
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////
             }
         });
 
