@@ -3,17 +3,25 @@ package org.example;
 import com.github.sarxos.webcam.*;
 import org.bytedeco.javacv.*;
 import org.bytedeco.javacv.Frame;
-import org.bytedeco.opencv.global.opencv_imgcodecs;
 import org.bytedeco.opencv.opencv_core.IplImage;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.Size;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.PriorityQueue;
 
 public class Main {
+
+    static int MAX_WIDTH = 9152;
+    static int MAX_HEIGHT = 6944;
+    static int PREV_WIDTH= 640;
+    static int PREV_HEIGHT=480;
     static PriorityQueue<String> priorityQueue = new PriorityQueue<String>(); // reason for this is to get access by the grabimage method to physical device.
 
     public static void main(String[] args) throws FrameGrabber.Exception, InterruptedException {
@@ -28,6 +36,10 @@ public class Main {
         JButton jButtonChooseCamera = new JButton("Wybierz");
         jButtonChooseCamera.setBounds(100, 100, 90, 20);
 
+
+        JButton jButtonSharpenImage = new JButton("Sharpen Image");
+        jButtonSharpenImage.setBounds(150, 150, 90, 20);
+
         JButton ButtonGrab = new JButton("Save Image!");
         ButtonGrab.setEnabled(false); // cannot grab image before choosing camera.
         ButtonGrab.setBounds(20, 140, 130, 20);
@@ -40,6 +52,7 @@ public class Main {
         window.add(jButtonChooseCamera);
         window.add(listOfCameras);
         window.add(ButtonGrab);
+        window.add(jButtonSharpenImage);
 
         window.add(jLabel);
 
@@ -53,6 +66,8 @@ public class Main {
         mainPanel.setPreferredSize(new Dimension(800, 600)); // preferowana wielkość dla panelu nadrzędnego
 
         final FrameGrabber[] cam = new FrameGrabber[1]; // current camera
+
+        final Frame[] GrabbedFrame = {null};
 
         jButtonChooseCamera.addActionListener(new ActionListener() {
             @Override
@@ -95,7 +110,7 @@ public class Main {
 
                             try {
 
-                                    InitCam.initialize(cam[0], 640, 480);
+                                    InitCam.initialize(cam[0], PREV_WIDTH, PREV_HEIGHT);
                                 } catch (InterruptedException | FrameGrabber.Exception ex) {
                                     ex.printStackTrace();
                                 }
@@ -140,19 +155,18 @@ public class Main {
                         }
 
                         //grabbing an image.
-                        FrameGrabber grabber = new OpenCVFrameGrabber(listOfCameras.getSelectedIndex());
-                        grabber.setImageWidth(9152);
-                        grabber.setImageHeight(6944);
+                            try {
+                                InitCam.initialize(cam[0],MAX_WIDTH , MAX_HEIGHT);
+                            } catch (InterruptedException ex) {
+                                throw new RuntimeException(ex);
+                            } catch (FrameGrabber.Exception ex) {
+                                throw new RuntimeException(ex);
+                            }
 
-                        try {
-                            grabber.start();
-
-                        } catch (FrameGrabber.Exception ex) {
-                            throw new RuntimeException(ex);
-                        }
                         Frame frame = null;
                         try {
-                            frame = grabber.grab();
+                            frame = cam[0].grab();
+                            GrabbedFrame[0] =cam[0].grab();
                         } catch (FrameGrabber.Exception ex) {
                             throw new RuntimeException(ex);
                         }
@@ -163,13 +177,6 @@ public class Main {
                         ImgSaver.saveImg(window,img);
 
                         try {
-                            grabber.close();
-                            grabber.release();
-                        } catch (FrameGrabber.Exception ex) {
-                            throw new RuntimeException(ex);
-                        }
-
-                        try {
                             Thread.sleep(200);
                         } catch (InterruptedException ex) {
                             throw new RuntimeException(ex);
@@ -177,6 +184,14 @@ public class Main {
 
                               priorityQueue.remove();
                              cam[0].notify(); // tell thread for video that device is aval.
+
+                            try {
+                                InitCam.initialize(cam[0], PREV_WIDTH, PREV_HEIGHT);
+                            } catch (InterruptedException ex) {
+                                throw new RuntimeException(ex);
+                            } catch (FrameGrabber.Exception ex) {
+                                throw new RuntimeException(ex);
+                            }
 
                             jButtonChooseCamera.doClick();
                     }
@@ -187,5 +202,30 @@ public class Main {
                    }
             }
         });
+
+/*        jButtonSharpenImage.addActionListener(new ActionListener() {
+
+
+            // trzeba zrobic zmienna globalna frame, ktora bedzie wypelniona obrazem z przechwycenia i wyswietlona obok
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                //Reading the Image from the file
+
+                GrabbedFrame[0].
+                Mat src = Imgcodecs.imread(, Imgcodecs.IMREAD_COLOR);
+                //Creating an empty matrix
+                Mat dest = new Mat(src.rows(), src.cols(), src.type());
+                Imgproc.GaussianBlur(src, dest, new Size(0,0), 10);
+                Core.addWeighted(src, 1.5, dest, -0.5, 0, dest);
+
+                // Writing the image
+                Imgcodecs.imwrite("D:\\altering_sharpness_100.jpg", dest);
+
+
+
+            }
+        });*/
+
     }
 }
