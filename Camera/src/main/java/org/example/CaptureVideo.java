@@ -32,19 +32,17 @@ public class CaptureVideo {
 
                 synchronized (lock) {
 
-                    while(!priorityQueue.isEmpty()) {
+                    while(!(priorityQueue.isEmpty())) {
+                        System.out.println("W");
                         try {
                             lock.wait();
+                            System.out.println("A");
+
                         } catch (InterruptedException ex) {
                             throw new RuntimeException(ex);
                         }
                     }
-
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    System.out.println("T");
 
                     try {
 

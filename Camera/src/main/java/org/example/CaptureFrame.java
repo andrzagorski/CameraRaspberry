@@ -51,7 +51,7 @@ public class CaptureFrame {
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
                     }
-                    
+
                     try {
                         InitCam.initialize(cam[0], prevWidth, prevHeight);
                     } catch (InterruptedException ex) {
