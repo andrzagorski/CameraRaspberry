@@ -166,7 +166,7 @@ public class Main {
                         Frame frame = null;
                         try {
                             frame = cam[0].grab();
-                            GrabbedFrame[0] =cam[0].grab();
+                            GrabbedFrame[0] =frame;
                         } catch (FrameGrabber.Exception ex) {
                             throw new RuntimeException(ex);
                         }
@@ -203,19 +203,22 @@ public class Main {
             }
         });
 
-/*        jButtonSharpenImage.addActionListener(new ActionListener() {
+       jButtonSharpenImage.addActionListener(new ActionListener() {
 
 
             // trzeba zrobic zmienna globalna frame, ktora bedzie wypelniona obrazem z przechwycenia i wyswietlona obok
-            @Override
+          /*  @Override
             public void actionPerformed(ActionEvent e) {
 
-                //Reading the Image from the file
+                OpenCVFrameConverter.ToMat converter1 = new OpenCVFrameConverter.ToMat();
+                OpenCVFrameConverter.ToOrgOpenCvCoreMat converter2 = new OpenCVFrameConverter.ToOrgOpenCvCoreMat();
 
-                GrabbedFrame[0].
-                Mat src = Imgcodecs.imread(, Imgcodecs.IMREAD_COLOR);
-                //Creating an empty matrix
+                Mat mat =converter2.convert(GrabbedFrame[0]);;
+
+                org.opencv.core.Mat src = converter2.convert(converter1.convert(mat));
+
                 Mat dest = new Mat(src.rows(), src.cols(), src.type());
+
                 Imgproc.GaussianBlur(src, dest, new Size(0,0), 10);
                 Core.addWeighted(src, 1.5, dest, -0.5, 0, dest);
 
@@ -224,8 +227,8 @@ public class Main {
 
 
 
-            }
-        });*/
+            }*/
+        });
 
     }
 }
