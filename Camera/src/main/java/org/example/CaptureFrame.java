@@ -7,15 +7,16 @@ import org.bytedeco.javacv.OpenCVFrameConverter;
 import org.bytedeco.opencv.opencv_core.IplImage;
 
 import javax.swing.*;
-import java.util.PriorityQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CaptureFrame {
 
-    static void Capture(FrameGrabber[] cam, Frame[] GrabbedFrame, JComboBox<String> listOfCameras, PriorityQueue<String> priorityQueue, CanvasFrame window, int prevWidth, int prevHeight, int MAX_WIDTH, int MAX_HEIGHT, Object lock) {
+    static void Capture(FrameGrabber[] cam, Frame[] GrabbedFrame, JComboBox<String> listOfCameras, AtomicBoolean priorityQueue, CanvasFrame window, int prevWidth, int prevHeight, int MAX_WIDTH, int MAX_HEIGHT, Object lock) {
         Runnable runnableCapturingImage = new Runnable() {
             @Override
             public void run() {
-                priorityQueue.add("Device Reservation"); // bo nie wejdzie do synchronized bo blokuje go inny watek
+
+                priorityQueue.set(true);
 
                 synchronized (lock){
                     try {
@@ -59,12 +60,8 @@ public class CaptureFrame {
                     } catch (FrameGrabber.Exception ex) {
                         throw new RuntimeException(ex);
                     }
-
-                    priorityQueue.remove();
-                    lock.notifyAll(); // nie dziala - watek nie startuje....
-
-
-                    // jButtonChooseCamera.doClick();
+                    priorityQueue.set(false);
+                    lock.notifyAll();
                 }
             }
         };

@@ -15,13 +15,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.PriorityQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
     static int MAX_WIDTH = 9152;
     static int MAX_HEIGHT = 6944;
     static int PREV_WIDTH= 640;
     static int PREV_HEIGHT=480;
-    static PriorityQueue<String> priorityQueue = new PriorityQueue<String>(); // reason for this is to get access by the grabimage method to physical device.
+
+    static final AtomicBoolean priority = new AtomicBoolean(false);
 
     public static void main(String[] args) throws FrameGrabber.Exception, InterruptedException {
 
@@ -75,24 +78,19 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ButtonGrab.setEnabled(true);
-                CaptureVideo.Capture(cam,listOfCameras,priorityQueue,window,PREV_WIDTH,PREV_HEIGHT,lock);
+                CaptureVideo.Capture(cam,listOfCameras,priority,window,PREV_WIDTH,PREV_HEIGHT,lock);
             }
         });
 
         ButtonGrab.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(priorityQueue);
-                CaptureFrame.Capture(cam,GrabbedFrame,listOfCameras,priorityQueue,window,PREV_WIDTH,PREV_HEIGHT,MAX_WIDTH,MAX_HEIGHT,lock);
+                CaptureFrame.Capture(cam,GrabbedFrame,listOfCameras,priority,window,PREV_WIDTH,PREV_HEIGHT,MAX_WIDTH,MAX_HEIGHT,lock);
             }
         });
 
-
-     //  jButtonSharpenImage.addActionListener(new ActionListener() {
-
-
-            // trzeba zrobic zmienna globalna frame, ktora bedzie wypelniona obrazem z przechwycenia i wyswietlona obok
-          /*  @Override
+       jButtonSharpenImage.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
 
                 OpenCVFrameConverter.ToMat converter1 = new OpenCVFrameConverter.ToMat();
@@ -100,7 +98,9 @@ public class Main {
 
                 Mat mat =converter2.convert(GrabbedFrame[0]);;
 
+               // System.out.println(GrabbedFrame[0]);
                 org.opencv.core.Mat src = converter2.convert(converter1.convert(mat));
+               // System.out.println(src);
 
                 Mat dest = new Mat(src.rows(), src.cols(), src.type());
 
@@ -112,8 +112,8 @@ public class Main {
 
 
 
-            }*/
-       // });
+            }
+        });
 
     }
 }

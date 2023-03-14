@@ -6,10 +6,10 @@ import org.bytedeco.javacv.FrameGrabber;
 import org.bytedeco.javacv.OpenCVFrameGrabber;
 
 import javax.swing.*;
-import java.util.PriorityQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CaptureVideo {
-    static void Capture(FrameGrabber[] cam, JComboBox<String> listOfCameras, PriorityQueue<String> priorityQueue, CanvasFrame window, int prevWidth, int prevHeight, Object lock) {
+    static void Capture(FrameGrabber[] cam, JComboBox<String> listOfCameras, AtomicBoolean priorityQueue, CanvasFrame window, int prevWidth, int prevHeight, Object lock) {
         Runnable runnableCapturingVideo = new Runnable() {
             @Override
             public void run() {
@@ -25,32 +25,25 @@ public class CaptureVideo {
                     } catch (FrameGrabber.Exception ex) {
                         throw new RuntimeException(ex);
                     }
-
                 }
-
                 cam[0] = new OpenCVFrameGrabber(listOfCameras.getSelectedIndex());
 
                 synchronized (lock) {
-
-                    while(!(priorityQueue.isEmpty())) {
-                        System.out.println("W");
-                        try {
-                            lock.wait();
-                            System.out.println("A");
-
-                        } catch (InterruptedException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                    System.out.println("T");
-
                     try {
-
                         InitCam.initialize(cam[0], prevWidth, prevHeight);
                     } catch (InterruptedException | FrameGrabber.Exception ex) {
                         ex.printStackTrace();
                     }
-                    while (priorityQueue.isEmpty()) {
+
+                    while (true) { // while is false
+
+                        while(priorityQueue.get()) {
+                            try {
+                                lock.wait();
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
                         Frame frame = null;
                         try {
                             frame = cam[0].grab();
