@@ -1,6 +1,5 @@
 package org.example;
 
-import com.github.sarxos.webcam.*;
 import org.bytedeco.javacv.*;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.opencv.opencv_core.IplImage;
@@ -32,9 +31,11 @@ public class Main {
 
         JComboBox<String> listOfCameras = new JComboBox<>();
 
-        for (int i = 0; i < Webcam.getWebcams().size(); i++) {
-            listOfCameras.addItem(Webcam.getWebcams().get(i).toString());
-        }
+      //  for (int i = 0; i < Webcam.getWebcams().size(); i++) {
+         //   listOfCameras.addItem(Webcam.getWebcams().get(i).toString());
+           listOfCameras.addItem("Quick Fix testowa index 0");
+
+        // }
         listOfCameras.setBounds(80, 50, 225, 20);
 
         JButton jButtonChooseCamera = new JButton("Wybierz");
