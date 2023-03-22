@@ -26,7 +26,7 @@ public class CaptureVideo {
                         throw new RuntimeException(ex);
                     }
                 }
-                cam[0] = new OpenCVFrameGrabber(listOfCameras.getSelectedIndex());
+                cam[0] = new OpenCVFrameGrabber(0); // index 0 hardcode
 
                 synchronized (lock) {
                     try {
