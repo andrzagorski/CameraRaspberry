@@ -10,9 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86f3a19e-72e6-4bec-8059-109e9c307d47" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/VideoRecording.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureVideo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureVideo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/VideoRecording.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/VideoRecording.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,9 +46,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="WebServerToolWindowFactoryState" value="false" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="CameraCapture" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="CameraCapture" />
@@ -104,6 +113,7 @@
       <workItem from="1679160196239" duration="2955000" />
       <workItem from="1679166662309" duration="186000" />
       <workItem from="1679302158062" duration="5300000" />
+      <workItem from="1679517471602" duration="2348000" />
     </task>
     <servers />
   </component>

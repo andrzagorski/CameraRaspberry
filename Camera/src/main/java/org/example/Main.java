@@ -29,21 +29,16 @@ public class Main {
 
         Object lock = new Object();
 
-        JComboBox<String> listOfCameras = new JComboBox<>();
-
-      //  for (int i = 0; i < Webcam.getWebcams().size(); i++) {
-         //   listOfCameras.addItem(Webcam.getWebcams().get(i).toString());
-           listOfCameras.addItem("Quick Fix testowa index 0");
-
-        // }
-        listOfCameras.setBounds(80, 50, 225, 20);
-
-        JButton jButtonChooseCamera = new JButton("Wybierz");
-        jButtonChooseCamera.setBounds(100, 100, 90, 20);
+        JButton jButtonChooseCamera = new JButton("Initialize Camera");
+        jButtonChooseCamera.setBounds(100, 100, 150, 20);
 
 
-        JButton jButtonSharpenImage = new JButton("Sharpen Image");
-        jButtonSharpenImage.setBounds(150, 150, 90, 20);
+        JButton jButtonStartRecord = new JButton("Make video");
+        jButtonChooseCamera.setBounds(170, 170, 130, 20);
+
+
+        //JButton jButtonSharpenImage = new JButton("Sharpen Image");
+       // jButtonSharpenImage.setBounds(150, 150, 90, 20);
 
         JButton ButtonGrab = new JButton("Save Image!");
         ButtonGrab.setEnabled(false); // cannot grab image before choosing camera.
@@ -55,9 +50,9 @@ public class Main {
         CanvasFrame window = new CanvasFrame("Webcam");
 
         window.add(jButtonChooseCamera);
-        window.add(listOfCameras);
         window.add(ButtonGrab);
-        window.add(jButtonSharpenImage);
+       // window.add(jButtonSharpenImage);
+        window.add(jButtonStartRecord);
 
         window.add(jLabel);
 
@@ -79,18 +74,28 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ButtonGrab.setEnabled(true);
-                CaptureVideo.Capture(cam,listOfCameras,priority,window,PREV_WIDTH,PREV_HEIGHT,lock);
+                CaptureVideo.Capture(cam,priority,window,PREV_WIDTH,PREV_HEIGHT,lock);
             }
         });
 
         ButtonGrab.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CaptureFrame.Capture(cam,GrabbedFrame,listOfCameras,priority,window,PREV_WIDTH,PREV_HEIGHT,MAX_WIDTH,MAX_HEIGHT,lock);
+                CaptureFrame.Capture(cam,GrabbedFrame,priority,window,PREV_WIDTH,PREV_HEIGHT,MAX_WIDTH,MAX_HEIGHT,lock);
             }
         });
 
-       jButtonSharpenImage.addActionListener(new ActionListener() {
+        jButtonStartRecord.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    VideoRecording.Record(cam,GrabbedFrame,priority,window,MAX_WIDTH,MAX_HEIGHT,10,100,lock);
+            }
+        });
+
+
+
+
+     /*  jButtonSharpenImage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -114,7 +119,7 @@ public class Main {
 
 
             }
-        });
+        });*/
 
     }
 }

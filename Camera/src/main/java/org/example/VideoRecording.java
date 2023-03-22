@@ -4,6 +4,7 @@ import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.FrameGrabber;
 import org.bytedeco.javacv.OpenCVFrameConverter;
+import org.bytedeco.opencv.global.opencv_imgcodecs;
 import org.bytedeco.opencv.opencv_core.IplImage;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
@@ -11,17 +12,27 @@ import org.opencv.videoio.VideoCapture;
 import org.opencv.videoio.VideoWriter;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.bytedeco.opencv.global.opencv_highgui.waitKey;
 
 public class VideoRecording {
-    static void Capture(FrameGrabber[] cam, Frame[] GrabbedFrame, JComboBox<String> listOfCameras, AtomicBoolean priorityQueue, CanvasFrame window, int prevWidth, int prevHeight, int MAX_WIDTH, int MAX_HEIGHT, Object lock) {
+    static void Record(FrameGrabber[] cam, Frame[] GrabbedFrame, AtomicBoolean priorityQueue, CanvasFrame window, int RecordWidth, int RecordHeight,int fps,int recordingTime,Object lock) {
         Runnable runnableRecordingVideo = new Runnable() {
             @Override
             public void run() {
 
                 priorityQueue.set(true);
+
+                // where u want to save a video.
+                File file = null;
+
+                JFileChooser fileChooser = new JFileChooser();
+                if (fileChooser.showSaveDialog(window) == JFileChooser.APPROVE_OPTION) {
+                    file = fileChooser.getSelectedFile();
+                }
+
                 synchronized (lock){
                     try {
                         Thread.sleep(100);
@@ -31,7 +42,7 @@ public class VideoRecording {
 
                     //grabbing an image.
                     try {
-                        InitCam.initialize(cam[0],MAX_WIDTH , MAX_HEIGHT);
+                        InitCam.initialize(cam[0],RecordWidth , RecordHeight);
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
                     } catch (FrameGrabber.Exception ex) {
@@ -40,19 +51,18 @@ public class VideoRecording {
                     Frame frame = null;
                     try {
                         frame = cam[0].grab();
-                        GrabbedFrame[0] =frame;
                     } catch (FrameGrabber.Exception ex) {
                         throw new RuntimeException(ex);
                     }
 
-                    int frameWidth = 640;
-                    int frameHeight = 480;
-                    int recordingTime = 10;
                     int fourcc = VideoWriter.fourcc('X','2','6','6');
                     VideoCapture capture = new VideoCapture(0); //na sztywno kamera 0
-                    capture.set(3,frameWidth);
-                    capture.set(4,frameHeight);
-                    VideoWriter out = new VideoWriter("output.mp4", fourcc, 25.0, new Size(frameWidth,frameHeight));
+                    capture.set(3,RecordWidth);
+                    capture.set(4,RecordHeight);
+
+                        if(file==null) {throw new NullPointerException(); }
+
+                            VideoWriter out = new VideoWriter(file.toString()+".mp4", fourcc, fps, new Size(RecordWidth,RecordHeight));
 
                     long startTime = System.nanoTime();
 
@@ -92,7 +102,7 @@ public class VideoRecording {
                     }
 
                     try {
-                        InitCam.initialize(cam[0], prevWidth, prevHeight);
+                        InitCam.initialize(cam[0], RecordWidth, RecordHeight);
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
                     } catch (FrameGrabber.Exception ex) {
