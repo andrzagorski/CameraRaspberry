@@ -13,7 +13,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CaptureFrame {
 
-    static void Capture(FrameGrabber[] cam, Frame[] GrabbedFrame, JComboBox<String> listOfCameras, AtomicBoolean priorityQueue, CanvasFrame window,ImagePanel right, int prevWidth, int prevHeight, int MAX_WIDTH, int MAX_HEIGHT, Object lock) {
+
+    static void Capture(FrameGrabber[] cam, Frame[] GrabbedFrame, AtomicBoolean priorityQueue, CanvasFrame window, int prevWidth, int prevHeight, int MAX_WIDTH, int MAX_HEIGHT, Object lock) {
         Runnable runnableCapturingImage = new Runnable() {
             @Override
             public void run() {

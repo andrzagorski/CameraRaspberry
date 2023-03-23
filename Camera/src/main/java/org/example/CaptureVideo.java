@@ -10,11 +10,13 @@ import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CaptureVideo {
-    static void Capture(FrameGrabber[] cam, JComboBox<String> listOfCameras, AtomicBoolean priorityQueue, CanvasFrame window,JPanel left, int prevWidth, int prevHeight, Object lock) {
+
+    static void Capture(FrameGrabber[] cam, AtomicBoolean priorityQueue, CanvasFrame window,JPanel left, int prevWidth, int prevHeight, Object lock) {
         left.removeAll();
         CanvasFrame canvasFrame = new CanvasFrame("video");
         canvasFrame.setVisible(false);
         left.add(canvasFrame.getCanvas());
+
         Runnable runnableCapturingVideo = new Runnable() {
             @Override
             public void run() {
@@ -31,7 +33,7 @@ public class CaptureVideo {
                         throw new RuntimeException(ex);
                     }
                 }
-                cam[0] = new OpenCVFrameGrabber(listOfCameras.getSelectedIndex());
+                cam[0] = new OpenCVFrameGrabber(0);
 
                 synchronized (lock) {
                     try {
@@ -40,7 +42,7 @@ public class CaptureVideo {
                         ex.printStackTrace();
                     }
 
-                    while (true) { // while is false
+                    while (true) {
 
                         while(priorityQueue.get()) {
                             try {

@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Camera:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86f3a19e-72e6-4bec-8059-109e9c307d47" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/ImagePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureVideo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureVideo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/VideoRecording.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/VideoRecording.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureFrame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureFrame$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureFrame.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureVideo$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureVideo$1.class" afterDir="false" />
@@ -116,8 +121,12 @@
       <updated>1678217442192</updated>
       <workItem from="1678217443283" duration="10233000" />
       <workItem from="1678265734037" duration="2987000" />
-      <workItem from="1678905610332" duration="16162000" />
-      <workItem from="1678978134707" duration="278000" />
+      <workItem from="1678889669771" duration="103000" />
+      <workItem from="1678909001769" duration="46000" />
+      <workItem from="1679160196239" duration="2955000" />
+      <workItem from="1679166662309" duration="186000" />
+      <workItem from="1679302158062" duration="5300000" />
+      <workItem from="1679517471602" duration="2348000" />
     </task>
     <servers />
   </component>
