@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Camera" target="8" />
+      <module name="Camera" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
