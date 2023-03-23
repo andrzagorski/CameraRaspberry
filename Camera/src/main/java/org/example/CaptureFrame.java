@@ -1,17 +1,19 @@
 package org.example;
 
-import org.bytedeco.javacv.CanvasFrame;
+import org.bytedeco.javacv.*;
 import org.bytedeco.javacv.Frame;
-import org.bytedeco.javacv.FrameGrabber;
-import org.bytedeco.javacv.OpenCVFrameConverter;
 import org.bytedeco.opencv.opencv_core.IplImage;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CaptureFrame {
 
-    static void Capture(FrameGrabber[] cam, Frame[] GrabbedFrame, JComboBox<String> listOfCameras, AtomicBoolean priorityQueue, CanvasFrame window, int prevWidth, int prevHeight, int MAX_WIDTH, int MAX_HEIGHT, Object lock) {
+    static void Capture(FrameGrabber[] cam, Frame[] GrabbedFrame, JComboBox<String> listOfCameras, AtomicBoolean priorityQueue, CanvasFrame window,ImagePanel right, int prevWidth, int prevHeight, int MAX_WIDTH, int MAX_HEIGHT, Object lock) {
         Runnable runnableCapturingImage = new Runnable() {
             @Override
             public void run() {
@@ -44,8 +46,18 @@ public class CaptureFrame {
 
                     OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
                     IplImage img = converter.convert(frame);
+                    BufferedImage bufferedImage = Java2DFrameUtils.toBufferedImage(img);
 
-                    ImgSaver.saveImg(window,img);
+
+                    right.setPreferredSize(new Dimension(window.getWidth()/2,window.getHeight()/2));
+                    //right.setSize(new Dimension(bufferedImage.getWidth(),bufferedImage.getHeight()));
+                    System.out.println(bufferedImage.getWidth()+" i "+bufferedImage.getHeight());
+                    right.setImage(bufferedImage);
+                    window.repaint();
+                    window.revalidate();
+                    //ImgSaver.saveImg(window,img);
+
+
 
                     try {
                         Thread.sleep(200);

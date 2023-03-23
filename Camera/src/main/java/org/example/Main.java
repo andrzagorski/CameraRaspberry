@@ -14,6 +14,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.PriorityQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -44,30 +46,58 @@ public class Main {
         JButton jButtonSharpenImage = new JButton("Sharpen Image");
         jButtonSharpenImage.setBounds(150, 150, 90, 20);
 
-        JButton ButtonGrab = new JButton("Save Image!");
-        ButtonGrab.setEnabled(false); // cannot grab image before choosing camera.
-        ButtonGrab.setBounds(20, 140, 130, 20);
+        JButton jButtonGrab = new JButton("Capture Image!");
+        jButtonGrab.setEnabled(false); // cannot grab image before choosing camera.
+        jButtonGrab.setBounds(20, 140, 130, 20);
 
-        JLabel jLabel = new JLabel();
-        jLabel.setBounds(90, 100, 400, 100);
+        //BOT SIDE
+        JPanel buttonPanelTop = new JPanel(new GridLayout(1, 0));
+        buttonPanelTop.add(jButtonChooseCamera);
+        buttonPanelTop.add(listOfCameras);
+        buttonPanelTop.add(jButtonGrab);
+        JPanel BottomSidePanel = new JPanel();
+        BottomSidePanel.setBackground(Color.DARK_GRAY);
 
-        CanvasFrame window = new CanvasFrame("Webcam");
+        //LEFT SIDE
+        JPanel LeftSidePanel = new JPanel();
+        LeftSidePanel.setBackground(Color.ORANGE);
 
-        window.add(jButtonChooseCamera);
-        window.add(listOfCameras);
-        window.add(ButtonGrab);
-        window.add(jButtonSharpenImage);
 
-        window.add(jLabel);
+        //RIGHT SIDE
+        ImagePanel RightSidePanel = new ImagePanel();
+        RightSidePanel.setBackground(Color.YELLOW);
+
+        //TOP SIDE
+        JPanel TopSidePanel = new JPanel();
+        TopSidePanel.setBackground(Color.PINK);
+        TopSidePanel.add(buttonPanelTop);
+
+        //CENTER SIDE
+        JPanel CenterSidePanel = new JPanel();
+        CenterSidePanel.setBackground(Color.LIGHT_GRAY);
+
+
+
+
+
+        CanvasFrame window = new CanvasFrame("Main");
+        window.setSize(1280, 1024);
+        window.setPreferredSize(new Dimension(1920,1080));
+        window.setLayout(new BorderLayout());
+        window.add(TopSidePanel,BorderLayout.NORTH);
+        window.add(BottomSidePanel,BorderLayout.SOUTH);
+        window.add(LeftSidePanel,BorderLayout.WEST);
+        window.add(RightSidePanel,BorderLayout.EAST);
+        window.add(CenterSidePanel,BorderLayout.CENTER);
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.pack();
-        window.setSize(1280, 1024);
+        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        GraphicsDevice graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+
         window.setVisible(true);
-        window.setLayout(new FlowLayout());
-        JPanel mainPanel = new JPanel(new FlowLayout());
-        window.add(mainPanel);
-        mainPanel.setPreferredSize(new Dimension(800, 600)); // preferowana wielkość dla panelu nadrzędnego
+        window.pack();
+        //graphicsDevice.setFullScreenWindow(window);
+
 
         final FrameGrabber[] cam = new FrameGrabber[1]; // current camera
 
@@ -77,15 +107,16 @@ public class Main {
         jButtonChooseCamera.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ButtonGrab.setEnabled(true);
-                CaptureVideo.Capture(cam,listOfCameras,priority,window,PREV_WIDTH,PREV_HEIGHT,lock);
+                jButtonGrab.setEnabled(true);
+                CaptureVideo.Capture(cam,listOfCameras,priority,window,LeftSidePanel,PREV_WIDTH,PREV_HEIGHT,lock);
             }
         });
 
-        ButtonGrab.addActionListener(new ActionListener() {
+        jButtonGrab.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CaptureFrame.Capture(cam,GrabbedFrame,listOfCameras,priority,window,PREV_WIDTH,PREV_HEIGHT,MAX_WIDTH,MAX_HEIGHT,lock);
+
+                CaptureFrame.Capture(cam,GrabbedFrame,listOfCameras,priority,window,RightSidePanel,PREV_WIDTH,PREV_HEIGHT,MAX_WIDTH,MAX_HEIGHT,lock);
             }
         });
 
@@ -99,7 +130,7 @@ public class Main {
                 Mat mat =converter2.convert(GrabbedFrame[0]);;
 
                // System.out.println(GrabbedFrame[0]);
-                org.opencv.core.Mat src = converter2.convert(converter1.convert(mat));
+                Mat src = converter2.convert(converter1.convert(mat));
                // System.out.println(src);
 
                 Mat dest = new Mat(src.rows(), src.cols(), src.type());

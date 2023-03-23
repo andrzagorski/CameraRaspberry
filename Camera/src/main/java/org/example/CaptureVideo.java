@@ -6,15 +6,20 @@ import org.bytedeco.javacv.FrameGrabber;
 import org.bytedeco.javacv.OpenCVFrameGrabber;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CaptureVideo {
-    static void Capture(FrameGrabber[] cam, JComboBox<String> listOfCameras, AtomicBoolean priorityQueue, CanvasFrame window, int prevWidth, int prevHeight, Object lock) {
+    static void Capture(FrameGrabber[] cam, JComboBox<String> listOfCameras, AtomicBoolean priorityQueue, CanvasFrame window,JPanel left, int prevWidth, int prevHeight, Object lock) {
+        left.removeAll();
+        CanvasFrame canvasFrame = new CanvasFrame("video");
+        canvasFrame.setVisible(false);
+        left.add(canvasFrame.getCanvas());
         Runnable runnableCapturingVideo = new Runnable() {
             @Override
             public void run() {
 
-                if (cam[0] != null) { // if camera is arleady allocated -> case when camera is switched to another
+                if (cam[0] != null) { // if camera is already allocated -> case when camera is switched to another
                     try {
                         cam[0].close();
                     } catch (FrameGrabber.Exception ex) {
@@ -50,7 +55,10 @@ public class CaptureVideo {
                         } catch (FrameGrabber.Exception ex) {
                             throw new RuntimeException(ex);
                         }
-                        window.showImage(frame);
+
+                        canvasFrame.showImage(frame);
+                        window.revalidate();
+
                         try {
                             Thread.sleep(25);
                         } catch (InterruptedException ex) {
