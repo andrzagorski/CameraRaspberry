@@ -49,7 +49,7 @@ public class Main {
         //BOT SIDE
         JPanel buttonPanelTop = new JPanel(new GridLayout(1, 0));
         buttonPanelTop.add(jButtonChooseCamera);
-        buttonPanelTop.add(listOfCameras);
+
         buttonPanelTop.add(jButtonGrab);
         JPanel BottomSidePanel = new JPanel();
         BottomSidePanel.setBackground(Color.DARK_GRAY);
@@ -59,10 +59,10 @@ public class Main {
         LeftSidePanel.setBackground(Color.ORANGE);
 
 
-        window.add(jButtonChooseCamera);
+/*        window.add(jButtonChooseCamera);
         window.add(ButtonGrab);
        // window.add(jButtonSharpenImage);
-        window.add(jButtonStartRecord);
+        window.add(jButtonStartRecord);*/
 
 
         //RIGHT SIDE
@@ -79,10 +79,8 @@ public class Main {
         CenterSidePanel.setBackground(Color.LIGHT_GRAY);
 
 
-
-
-
         CanvasFrame window = new CanvasFrame("Main");
+
         window.setSize(1280, 1024);
         window.setPreferredSize(new Dimension(1920,1080));
         window.setLayout(new BorderLayout());
