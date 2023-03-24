@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.opencv.videoio.VideoCapture;
+
 import static org.opencv.highgui.HighGui.imshow;
 import static org.opencv.highgui.HighGui.waitKey;
 
@@ -18,11 +19,7 @@ import static org.opencv.highgui.HighGui.waitKey;
 public class VideoRecording {
 
     static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
-  // static {
-       //System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-      // System.load("C:\\opencv\\build\\java\\x64\\opencv_java451.dll");
-      // System.load("C:\\opencv\\build\\x64\\vc14\\bin\\opencv_ffmpeg451_64.dll");
- //  }
+
 
     static void Record(FrameGrabber[] cam, Frame[] GrabbedFrame, AtomicBoolean priorityQueue, CanvasFrame window, int RecordWidth, int RecordHeight,int fps,int recordingTime,Object lock) {
         Runnable runnableRecordingVideo = new Runnable() {
@@ -45,9 +42,9 @@ public class VideoRecording {
                         throw new RuntimeException(ex);
                     }
 
-                    Size frameSize = new Size(RecordWidth, RecordHeight); // rozmiar klatki wideo
-                    int fourcc = VideoWriter.fourcc('X','V','I','D'); // format wideo
-                    VideoWriter videoWriter = new VideoWriter(file+".avi", fourcc, fps, frameSize, true);
+                    Size frameSize = new Size(640, 480); // NIE DZIALA Z INNA ROZDZIELCZOSCIA!!!!!!!
+                    int fourcc = VideoWriter.fourcc('m','p','4','v'); // format wideo
+                    VideoWriter videoWriter = new VideoWriter(file+".mp4", fourcc, fps, frameSize, true);
 
                     VideoCapture videoCapture = new VideoCapture(0);
 

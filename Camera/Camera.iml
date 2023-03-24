@@ -188,5 +188,19 @@
     <orderEntry type="library" name="Maven: org.bytedeco:tesseract:macosx-x86_64:4.1.1-1.5.5" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:tesseract:windows-x86:4.1.1-1.5.5" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:tesseract:windows-x86_64:4.1.1-1.5.5" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../opencv/build/java/opencv-451.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <NATIVE>
+          <root url="file://$MODULE_DIR$/../opencv/build/java/x86" />
+        </NATIVE>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../opencv/build/java/opencv-451.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
