@@ -20,14 +20,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
-
-
     static int MAX_WIDTH = 9152;
     static int MAX_HEIGHT = 6944;
     static int PREV_WIDTH= 640;
     static int PREV_HEIGHT=480;
+    static String[] AvaliableResolutions = { "640x480","1280x720" ,"1920x1080","2312x1736", "3840x2160", "4624x3472", "9152x6944" };
 
     static final AtomicBoolean priority = new AtomicBoolean(false);
+
 
     public static void main(String[] args) throws FrameGrabber.Exception, InterruptedException {
 
@@ -46,19 +46,24 @@ public class Main {
         jButtonGrab.setBounds(20, 140, 130, 20);
 
 
-        JComboBox RecordResolution = new JComboBox();
-        JComboBox CaptureImageResolution = new JComboBox();
 
-
-
+        JComboBox RecordResolution = new JComboBox(AvaliableResolutions);
+        JComboBox CaptureImageResolution = new JComboBox(AvaliableResolutions);
+        RecordResolution.setSelectedIndex(0);
+        CaptureImageResolution.setSelectedIndex(0);
 
 
         //BOT SIDE
-        JPanel buttonPanelTop = new JPanel(new GridLayout(1, 0));
-        buttonPanelTop.add(jButtonChooseCamera);
+        JPanel buttonPanelTop = new JPanel(new GridLayout(2, 0));
         buttonPanelTop.add(jButtonStartRecord);
-
         buttonPanelTop.add(jButtonGrab);
+        buttonPanelTop.add(jButtonChooseCamera);
+
+
+        buttonPanelTop.add(RecordResolution);
+        buttonPanelTop.add(CaptureImageResolution);
+
+
         JPanel BottomSidePanel = new JPanel();
         BottomSidePanel.setBackground(Color.DARK_GRAY);
 

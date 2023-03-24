@@ -17,6 +17,13 @@ import static org.opencv.highgui.HighGui.waitKey;
 
 public class VideoRecording {
 
+    static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
+  // static {
+       //System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+      // System.load("C:\\opencv\\build\\java\\x64\\opencv_java451.dll");
+      // System.load("C:\\opencv\\build\\x64\\vc14\\bin\\opencv_ffmpeg451_64.dll");
+ //  }
+
     static void Record(FrameGrabber[] cam, Frame[] GrabbedFrame, AtomicBoolean priorityQueue, CanvasFrame window, int RecordWidth, int RecordHeight,int fps,int recordingTime,Object lock) {
         Runnable runnableRecordingVideo = new Runnable() {
 

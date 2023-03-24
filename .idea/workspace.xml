@@ -10,12 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86f3a19e-72e6-4bec-8059-109e9c307d47" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Opencv.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/opencv-455.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Camera/Camera.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/CameraRaspberry.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CameraRaspberry.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Camera_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Opencv.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/Camera.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/Camera.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/VideoRecording.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/VideoRecording.java" afterDir="false" />
@@ -25,6 +23,9 @@
       <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/VideoRecording$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/VideoRecording$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/VideoRecording.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/VideoRecording.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenCv/opencv-455.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenCv/x64/opencv_java455.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenCv/x86/opencv_java455.dll" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,12 +64,12 @@
   "keyToString": {
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Andrzej/Documents/GitHub/CameraRaspberry/OpenCv",
+    "last_opened_file_path": "C:/Users/Andrzej/Documents/GitHub/CameraRaspberry/opencv/build/java/x64",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.44367817",
     "settings.editor.selected.configurable": "preferences.general",
@@ -133,7 +134,7 @@
       <workItem from="1679166662309" duration="186000" />
       <workItem from="1679302158062" duration="5300000" />
       <workItem from="1679517471602" duration="2348000" />
-      <workItem from="1679671553884" duration="9779000" />
+      <workItem from="1679671553884" duration="13310000" />
     </task>
     <servers />
   </component>
