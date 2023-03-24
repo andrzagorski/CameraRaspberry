@@ -5,5 +5,19 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="Opencv" level="project" />
+    <orderEntry type="library" exported="" name="opencv-455" level="application" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/OpenCv/opencv-455.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/OpenCv/opencv-455.jar!/" />
+          <root url="jar://$MODULE_DIR$/OpenCv/opencv-455.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>

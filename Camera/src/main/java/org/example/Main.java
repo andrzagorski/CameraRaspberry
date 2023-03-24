@@ -20,6 +20,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
+
+
     static int MAX_WIDTH = 9152;
     static int MAX_HEIGHT = 6944;
     static int PREV_WIDTH= 640;
@@ -36,19 +38,25 @@ public class Main {
 
 
         JButton jButtonStartRecord = new JButton("Make video");
-        jButtonChooseCamera.setBounds(170, 170, 130, 20);
+        jButtonStartRecord.setBounds(170, 170, 130, 20);
 
-
-        //JButton jButtonSharpenImage = new JButton("Sharpen Image");
-       // jButtonSharpenImage.setBounds(150, 150, 90, 20);
 
         JButton jButtonGrab = new JButton("Capture Image!");
         jButtonGrab.setEnabled(false); // cannot grab image before choosing camera.
         jButtonGrab.setBounds(20, 140, 130, 20);
 
+
+        JComboBox RecordResolution = new JComboBox();
+        JComboBox CaptureImageResolution = new JComboBox();
+
+
+
+
+
         //BOT SIDE
         JPanel buttonPanelTop = new JPanel(new GridLayout(1, 0));
         buttonPanelTop.add(jButtonChooseCamera);
+        buttonPanelTop.add(jButtonStartRecord);
 
         buttonPanelTop.add(jButtonGrab);
         JPanel BottomSidePanel = new JPanel();
@@ -57,12 +65,6 @@ public class Main {
         //LEFT SIDE
         JPanel LeftSidePanel = new JPanel();
         LeftSidePanel.setBackground(Color.ORANGE);
-
-
-/*        window.add(jButtonChooseCamera);
-        window.add(ButtonGrab);
-       // window.add(jButtonSharpenImage);
-        window.add(jButtonStartRecord);*/
 
 
         //RIGHT SIDE
@@ -117,48 +119,18 @@ public class Main {
         jButtonGrab.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
                 CaptureFrame.Capture(cam,GrabbedFrame,priority,window,RightSidePanel,PREV_WIDTH,PREV_HEIGHT,MAX_WIDTH,MAX_HEIGHT,lock);
-
             }
         });
 
         jButtonStartRecord.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
                     VideoRecording.Record(cam,GrabbedFrame,priority,window,MAX_WIDTH,MAX_HEIGHT,10,100,lock);
             }
         });
 
-
-
-
-     /*  jButtonSharpenImage.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                OpenCVFrameConverter.ToMat converter1 = new OpenCVFrameConverter.ToMat();
-                OpenCVFrameConverter.ToOrgOpenCvCoreMat converter2 = new OpenCVFrameConverter.ToOrgOpenCvCoreMat();
-
-                Mat mat =converter2.convert(GrabbedFrame[0]);;
-
-               // System.out.println(GrabbedFrame[0]);
-                Mat src = converter2.convert(converter1.convert(mat));
-               // System.out.println(src);
-
-                Mat dest = new Mat(src.rows(), src.cols(), src.type());
-
-                Imgproc.GaussianBlur(src, dest, new Size(0,0), 10);
-                Core.addWeighted(src, 1.5, dest, -0.5, 0, dest);
-
-                // Writing the image
-                Imgcodecs.imwrite("D:\\altering_sharpness_100.jpg", dest);
-
-
-
-            }
-        });*/
 
     }
 }
