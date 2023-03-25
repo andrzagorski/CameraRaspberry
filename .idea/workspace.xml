@@ -10,9 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86f3a19e-72e6-4bec-8059-109e9c307d47" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/CameraRaspberry.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CameraRaspberry.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Camera/Camera.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/Camera.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/VideoRecording.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/VideoRecording.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/VideoRecording$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/VideoRecording$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/VideoRecording.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/VideoRecording.class" afterDir="false" />
@@ -128,6 +126,8 @@
       <workItem from="1679671553884" duration="13310000" />
       <workItem from="1679685887698" duration="2759000" />
       <workItem from="1679688745280" duration="48000" />
+      <workItem from="1679729671224" duration="1561000" />
+      <workItem from="1679748572203" duration="4855000" />
     </task>
     <servers />
   </component>

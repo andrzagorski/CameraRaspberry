@@ -14,6 +14,8 @@ import org.opencv.videoio.VideoCapture;
 
 import static org.opencv.highgui.HighGui.imshow;
 import static org.opencv.highgui.HighGui.waitKey;
+import static org.opencv.videoio.Videoio.CAP_PROP_FRAME_HEIGHT;
+import static org.opencv.videoio.Videoio.CAP_PROP_FRAME_WIDTH;
 
 
 public class VideoRecording {
@@ -42,16 +44,26 @@ public class VideoRecording {
                         throw new RuntimeException(ex);
                     }
 
-                    Size frameSize = new Size(640, 480); // NIE DZIALA Z INNA ROZDZIELCZOSCIA!!!!!!!
-                    int fourcc = VideoWriter.fourcc('m','p','4','v'); // format wideo
+                    Size frameSize = new Size(1280, 720); // this res work with external cam.
+
+                    VideoCapture videoCapture = new VideoCapture(1);
+                    videoCapture.set(CAP_PROP_FRAME_WIDTH,frameSize.width);
+                    videoCapture.set(CAP_PROP_FRAME_HEIGHT,frameSize.height);
+
+
+                    int fourcc = VideoWriter.fourcc('h','2','6','4'); // format wideo
                     VideoWriter videoWriter = new VideoWriter(file+".mp4", fourcc, fps, frameSize, true);
 
-                    VideoCapture videoCapture = new VideoCapture(0);
 
                     Mat frame = new Mat();
                     while (true) {
                         videoCapture.read(frame);
                         videoWriter.write(frame);
+
+                        System.out.println(frame.height()+" "+frame.width());
+                        System.out.println(videoCapture.get(CAP_PROP_FRAME_HEIGHT)+" "+videoCapture.get(CAP_PROP_FRAME_WIDTH));
+
+
                         imshow("Nagrywanie wideo", frame);
                         if (waitKey(1) == 27) break; // Przerwanie nagrywania po naciśnięciu klawisza Esc
                     }
