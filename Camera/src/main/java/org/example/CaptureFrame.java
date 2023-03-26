@@ -13,6 +13,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CaptureFrame {
 
+private static IplImage img = null;
+
+    static void SaveImage(CanvasFrame window) {
+        if (img!=null) {
+            ImgSaver.saveImg(window,img);
+        }
+    }
 
     static void Capture(FrameGrabber[] cam, Frame[] GrabbedFrame, AtomicBoolean priorityQueue, CanvasFrame window,ImagePanel right, int prevWidth, int prevHeight, int MAX_WIDTH, int MAX_HEIGHT, Object lock) {
         Runnable runnableCapturingImage = new Runnable() {
@@ -46,7 +53,7 @@ public class CaptureFrame {
                     }
 
                     OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
-                    IplImage img = converter.convert(frame);
+                    img = converter.convert(frame);
                     BufferedImage bufferedImage = Java2DFrameUtils.toBufferedImage(img);
 
 
@@ -56,9 +63,6 @@ public class CaptureFrame {
                     right.setImage(bufferedImage);
                     window.repaint();
                     window.revalidate();
-                    //ImgSaver.saveImg(window,img);
-
-
 
                     try {
                         Thread.sleep(200);

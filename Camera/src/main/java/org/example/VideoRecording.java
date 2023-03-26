@@ -17,11 +17,9 @@ import static org.opencv.highgui.HighGui.waitKey;
 import static org.opencv.videoio.Videoio.CAP_PROP_FRAME_HEIGHT;
 import static org.opencv.videoio.Videoio.CAP_PROP_FRAME_WIDTH;
 
-
 public class VideoRecording {
 
     static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
-
 
     static void Record(FrameGrabber[] cam, Frame[] GrabbedFrame, AtomicBoolean priorityQueue, CanvasFrame window, int RecordWidth, int RecordHeight,int fps,int recordingTime,Object lock) {
         Runnable runnableRecordingVideo = new Runnable() {
@@ -44,9 +42,9 @@ public class VideoRecording {
                         throw new RuntimeException(ex);
                     }
 
-                    Size frameSize = new Size(1280, 720); // this res work with external cam.
+                    Size frameSize = new Size(RecordWidth, RecordHeight); // this res work with external cam.
 
-                    VideoCapture videoCapture = new VideoCapture(1);
+                    VideoCapture videoCapture = new VideoCapture(0);
                     videoCapture.set(CAP_PROP_FRAME_WIDTH,frameSize.width);
                     videoCapture.set(CAP_PROP_FRAME_HEIGHT,frameSize.height);
 

@@ -20,14 +20,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
-    static int MAX_WIDTH = 9152;
-    static int MAX_HEIGHT = 6944;
     static int PREV_WIDTH= 640;
     static int PREV_HEIGHT=480;
-    static String[] AvaliableResolutions = { "640x480","1280x720" ,"1920x1080","2312x1736", "3840x2160", "4624x3472", "9152x6944" };
-
     static final AtomicBoolean priority = new AtomicBoolean(false);
-
 
     public static void main(String[] args) throws FrameGrabber.Exception, InterruptedException {
 
@@ -45,10 +40,14 @@ public class Main {
         jButtonGrab.setEnabled(false); // cannot grab image before choosing camera.
         jButtonGrab.setBounds(20, 140, 130, 20);
 
+        JButton JbuttonSaveCaptured = new JButton("Save Captured Image");
+        JbuttonSaveCaptured.setEnabled(false); // cannot grab image before choosing camera.
+        jButtonGrab.setBounds(20, 140, 130, 20);
 
 
-        JComboBox RecordResolution = new JComboBox(AvaliableResolutions);
-        JComboBox CaptureImageResolution = new JComboBox(AvaliableResolutions);
+        JComboBox<SelectedResolution.ResolutionOption> RecordResolution = new JComboBox<>(SelectedResolution.ResolutionOption.values());
+        JComboBox<SelectedResolution.ResolutionOption> CaptureImageResolution = new JComboBox<>(SelectedResolution.ResolutionOption.values());
+
         RecordResolution.setSelectedIndex(0);
         CaptureImageResolution.setSelectedIndex(0);
 
@@ -58,10 +57,10 @@ public class Main {
         buttonPanelTop.add(jButtonStartRecord);
         buttonPanelTop.add(jButtonGrab);
         buttonPanelTop.add(jButtonChooseCamera);
-
-
         buttonPanelTop.add(RecordResolution);
         buttonPanelTop.add(CaptureImageResolution);
+        buttonPanelTop.add(JbuttonSaveCaptured);
+
 
 
         JPanel BottomSidePanel = new JPanel();
@@ -105,7 +104,6 @@ public class Main {
         window.pack();
         //graphicsDevice.setFullScreenWindow(window);
 
-
         final FrameGrabber[] cam = new FrameGrabber[1]; // current camera
 
         final Frame[] GrabbedFrame = {null};
@@ -124,15 +122,28 @@ public class Main {
         jButtonGrab.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CaptureFrame.Capture(cam,GrabbedFrame,priority,window,RightSidePanel,PREV_WIDTH,PREV_HEIGHT,MAX_WIDTH,MAX_HEIGHT,lock);
+                JbuttonSaveCaptured.setEnabled(true);
+
+                SelectedResolution.ResolutionOption CaptureResolution = (SelectedResolution.ResolutionOption)CaptureImageResolution.getSelectedItem();
+
+                CaptureFrame.Capture(cam,GrabbedFrame,priority,window,RightSidePanel,PREV_WIDTH,PREV_HEIGHT,CaptureResolution.getWidth(), CaptureResolution.getHeight(), lock);
             }
         });
-
         jButtonStartRecord.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-                    VideoRecording.Record(cam,GrabbedFrame,priority,window,MAX_WIDTH,MAX_HEIGHT,10,100,lock);
+
+                SelectedResolution.ResolutionOption RecordingResolution = (SelectedResolution.ResolutionOption)RecordResolution.getSelectedItem();
+
+                VideoRecording.Record(cam,GrabbedFrame,priority,window,RecordingResolution.getWidth(),RecordingResolution.getHeight(),10,100,lock);
+            }
+        });
+
+        JbuttonSaveCaptured.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CaptureFrame.SaveImage(window);
             }
         });
 
