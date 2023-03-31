@@ -62,7 +62,6 @@ public class Main {
         buttonPanelTop.add(JbuttonSaveCaptured);
 
 
-
         JPanel BottomSidePanel = new JPanel();
         BottomSidePanel.setBackground(Color.DARK_GRAY);
 
@@ -70,10 +69,7 @@ public class Main {
         JPanel LeftSidePanel = new JPanel();
         LeftSidePanel.setBackground(Color.ORANGE);
 
-
         //RIGHT SIDE
-
-
         JPanel RightSidePanel = new JPanel();
         RightSidePanel.setBackground(Color.YELLOW);
 
@@ -85,7 +81,6 @@ public class Main {
         //CENTER SIDE
         JPanel CenterSidePanel = new JPanel();
         CenterSidePanel.setBackground(Color.LIGHT_GRAY);
-
 
         CanvasFrame window = new CanvasFrame("Camera");
 
