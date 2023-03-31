@@ -21,7 +21,13 @@ private static IplImage img = null;
         }
     }
 
-    static void Capture(FrameGrabber[] cam, Frame[] GrabbedFrame, AtomicBoolean priorityQueue, CanvasFrame window,ImagePanel right, int prevWidth, int prevHeight, int MAX_WIDTH, int MAX_HEIGHT, Object lock) {
+    static void Capture(FrameGrabber[] cam, Frame[] GrabbedFrame, AtomicBoolean priorityQueue, CanvasFrame window,JPanel right, int prevWidth, int prevHeight, int MAX_WIDTH, int MAX_HEIGHT, Object lock) {
+
+        CanvasFrame canvasFrame = new CanvasFrame("a");
+        canvasFrame.setVisible(false);
+        right.add(canvasFrame.getCanvas());
+
+
         Runnable runnableCapturingImage = new Runnable() {
             @Override
             public void run() {
@@ -54,14 +60,12 @@ private static IplImage img = null;
 
                     OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
                     img = converter.convert(frame);
-                    BufferedImage bufferedImage = Java2DFrameUtils.toBufferedImage(img);
+                   // BufferedImage bufferedImage = Java2DFrameUtils.toBufferedImage(img);
+                   // right.setImage(bufferedImage);
 
 
-                    right.setPreferredSize(new Dimension(window.getWidth()/2,window.getHeight()/2));
-                    //right.setSize(new Dimension(bufferedImage.getWidth(),bufferedImage.getHeight()));
-                    System.out.println(bufferedImage.getWidth()+" i "+bufferedImage.getHeight());
-                    right.setImage(bufferedImage);
-                    window.repaint();
+                    canvasFrame.showImage(frame);
+                    canvasFrame.setCanvasSize(640,480);
                     window.revalidate();
 
                     try {

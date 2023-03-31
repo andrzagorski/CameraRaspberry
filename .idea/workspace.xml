@@ -10,13 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86f3a19e-72e6-4bec-8059-109e9c307d47" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/SelectedResolution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Camera_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Camera/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureVideo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureVideo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/InitCam.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/InitCam.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/VideoRecording.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/VideoRecording.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/VideoRecording$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/VideoRecording$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/VideoRecording.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/VideoRecording.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/InitCam.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/InitCam.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,12 +58,12 @@
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Andrzej/Documents/GitHub/CameraRaspberry/opencv/build/java/x86&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Andrzej/Documents/GitHub/CameraRaspberry&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.44367817&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;,
@@ -132,6 +134,9 @@
       <workItem from="1679729671224" duration="1561000" />
       <workItem from="1679748572203" duration="4855000" />
       <workItem from="1679837145350" duration="3823000" />
+      <workItem from="1679995536718" duration="169000" />
+      <workItem from="1680201950764" duration="3315000" />
+      <workItem from="1680292348936" duration="1301000" />
     </task>
     <servers />
   </component>

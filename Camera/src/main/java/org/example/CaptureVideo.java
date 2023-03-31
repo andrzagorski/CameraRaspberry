@@ -58,7 +58,9 @@ public class CaptureVideo {
                             throw new RuntimeException(ex);
                         }
 
+
                         canvasFrame.showImage(frame);
+                        canvasFrame.setCanvasSize(640,480);
                         window.revalidate();
 
                         try {

@@ -72,7 +72,9 @@ public class Main {
 
 
         //RIGHT SIDE
-        ImagePanel RightSidePanel = new ImagePanel();
+
+
+        JPanel RightSidePanel = new JPanel();
         RightSidePanel.setBackground(Color.YELLOW);
 
         //TOP SIDE
@@ -85,10 +87,10 @@ public class Main {
         CenterSidePanel.setBackground(Color.LIGHT_GRAY);
 
 
-        CanvasFrame window = new CanvasFrame("Main");
+        CanvasFrame window = new CanvasFrame("Camera");
 
         window.setSize(1280, 1024);
-        window.setPreferredSize(new Dimension(1920,1080));
+        window.setPreferredSize(new Dimension(1366,768));
         window.setLayout(new BorderLayout());
         window.add(TopSidePanel,BorderLayout.NORTH);
         window.add(BottomSidePanel,BorderLayout.SOUTH);
