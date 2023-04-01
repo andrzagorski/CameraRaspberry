@@ -10,10 +10,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86f3a19e-72e6-4bec-8059-109e9c307d47" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/HttpStreamServer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/OpenCVCameraStream.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureVideo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureVideo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/HttpStreamServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/HttpStreamServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/ImagePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/ImagePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/OpenCVCameraStream.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureFrame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureFrame$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureFrame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureVideo$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureVideo$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureVideo.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureVideo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/Main$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/Main$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/Main$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/Main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/Main$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,10 +70,10 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.44367817&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.idesettings.quicklists&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -137,6 +149,10 @@
       <workItem from="1679995536718" duration="169000" />
       <workItem from="1680201950764" duration="3315000" />
       <workItem from="1680292348936" duration="2894000" />
+      <workItem from="1680370744361" duration="762000" />
+      <workItem from="1680378310892" duration="140000" />
+      <workItem from="1680378906552" duration="176000" />
+      <workItem from="1680379352856" duration="8670000" />
     </task>
     <servers />
   </component>

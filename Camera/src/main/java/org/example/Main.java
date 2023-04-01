@@ -52,6 +52,13 @@ public class Main {
         CaptureImageResolution.setSelectedIndex(0);
 
 
+
+        JButton JBtnStartHttpServices = new JButton("Start Http Server");
+        JBtnStartHttpServices.setBounds(100, 100, 150, 20);
+        JBtnStartHttpServices.setEnabled(false);
+
+
+
         //BOT SIDE
         JPanel buttonPanelTop = new JPanel(new GridLayout(2, 0));
         buttonPanelTop.add(jButtonStartRecord);
@@ -60,6 +67,7 @@ public class Main {
         buttonPanelTop.add(RecordResolution);
         buttonPanelTop.add(CaptureImageResolution);
         buttonPanelTop.add(JbuttonSaveCaptured);
+        buttonPanelTop.add(JBtnStartHttpServices);
 
 
         JPanel BottomSidePanel = new JPanel();
@@ -111,6 +119,8 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
 
                 jButtonGrab.setEnabled(true);
+                JBtnStartHttpServices.setEnabled(true);
+
                 CaptureVideo.Capture(cam,priority,window,LeftSidePanel,PREV_WIDTH,PREV_HEIGHT,lock);
 
             }
@@ -143,6 +153,19 @@ public class Main {
                 CaptureFrame.SaveImage(window);
             }
         });
+
+
+
+        JBtnStartHttpServices.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+                CaptureVideo.startThreadStream();
+                CaptureVideo.httpstream=true;
+                JBtnStartHttpServices.setEnabled(false);
+            }
+        });
+
 
 
     }

@@ -3,6 +3,8 @@ package org.example;
 import org.bytedeco.javacv.*;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.opencv.opencv_core.IplImage;
+import org.opencv.core.Mat;
+import org.opencv.videoio.VideoCapture;
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,9 +62,6 @@ private static IplImage img = null;
 
                     OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
                     img = converter.convert(frame);
-                   // BufferedImage bufferedImage = Java2DFrameUtils.toBufferedImage(img);
-                   // right.setImage(bufferedImage);
-
 
                     canvasFrame.showImage(frame);
                     canvasFrame.setCanvasSize(640,480);

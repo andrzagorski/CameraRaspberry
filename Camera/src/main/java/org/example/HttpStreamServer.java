@@ -1,29 +1,21 @@
 package org.example;
 
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfByte;
-import org.opencv.imgcodecs.Imgcodecs;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Logger;
 
 public class HttpStreamServer implements Runnable {
 
-
-    private BufferedImage img = null;
     private ServerSocket serverSocket;
     private Socket socket;
     private final String boundary = "stream";
     private OutputStream outputStream;
-    public Mat imag;
+    public BufferedImage imag;
 
-    public HttpStreamServer(Mat imagFr) {
-        this.imag = imagFr;
-    }
 
+    public HttpStreamServer() {}
 
     public void startStreamingServer() throws IOException {
         serverSocket = new ServerSocket(8080);
@@ -44,14 +36,13 @@ public class HttpStreamServer implements Runnable {
                 "--" + boundary + "\r\n").getBytes());
     }
 
-    public void pushImage(Mat frame) throws IOException {
+    public void pushImage(BufferedImage frame) throws IOException {
         if (frame == null)
             return;
         try {
             outputStream = socket.getOutputStream();
-            BufferedImage img = Mat2bufferedImage(frame);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(img, "jpg", baos);
+            ImageIO.write(frame, "jpg", baos);
             byte[] imageBytes = baos.toByteArray();
             outputStream.write(("Content-type: image/jpeg\r\n" +
                     "Content-Length: " + imageBytes.length + "\r\n" +
@@ -64,12 +55,11 @@ public class HttpStreamServer implements Runnable {
         }
     }
 
-
     public void run() {
         try {
             System.out.print("go to  http://localhost:8080 with browser");
-            startStreamingServer();
 
+            startStreamingServer();
             while (true) {
                 pushImage(imag);
             }
@@ -83,14 +73,5 @@ public class HttpStreamServer implements Runnable {
         socket.close();
         serverSocket.close();
     }
-    
-    public static BufferedImage Mat2bufferedImage(Mat image) throws IOException {
-        MatOfByte bytemat = new MatOfByte();
-        Imgcodecs.imencode(".jpg", image, bytemat);
-        byte[] bytes = bytemat.toArray();
-        InputStream in = new ByteArrayInputStream(bytes);
-        BufferedImage img = null;
-        img = ImageIO.read(in);
-        return img;
-    }
+
 }

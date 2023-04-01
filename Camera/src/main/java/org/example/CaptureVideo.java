@@ -1,21 +1,40 @@
 package org.example;
 
-import org.bytedeco.javacv.CanvasFrame;
+import org.bytedeco.javacv.*;
 import org.bytedeco.javacv.Frame;
-import org.bytedeco.javacv.FrameGrabber;
-import org.bytedeco.javacv.OpenCVFrameGrabber;
-
+import org.bytedeco.opencv.opencv_core.IplImage;
+import org.opencv.videoio.VideoCapture;
 import javax.swing.*;
-import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CaptureVideo {
+
+    // http purposes
+    public static boolean httpstream = false;
+    private static HttpStreamServer httpStreamService= new HttpStreamServer();
+    static VideoCapture videoCapture;
+    static Timer tmrVideoProcess;
+
+    public static void  startThreadStream() {
+        new Thread(httpStreamService).start();
+    }
+
+    public static BufferedImage toBufferedImage(IplImage src) {
+        OpenCVFrameConverter.ToIplImage grabberConverter = new OpenCVFrameConverter.ToIplImage();
+        Java2DFrameConverter paintConverter = new Java2DFrameConverter();
+        Frame frame = grabberConverter.convert(src);
+        return paintConverter.getBufferedImage(frame,1);
+    }
+
 
     static void Capture(FrameGrabber[] cam, AtomicBoolean priorityQueue, CanvasFrame window,JPanel left, int prevWidth, int prevHeight, Object lock) {
         left.removeAll();
         CanvasFrame canvasFrame = new CanvasFrame("video");
         canvasFrame.setVisible(false);
         left.add(canvasFrame.getCanvas());
+        OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
+
 
         Runnable runnableCapturingVideo = new Runnable() {
             @Override
@@ -63,8 +82,14 @@ public class CaptureVideo {
                         canvasFrame.setCanvasSize(640,480);
                         window.revalidate();
 
+                        IplImage img2 = converter.convert(frame);
+
+                        if(httpstream) {
+                            httpStreamService.imag = toBufferedImage(img2);
+                        }
+
                         try {
-                            Thread.sleep(25);
+                            Thread.sleep(50);
                         } catch (InterruptedException ex) {
                             throw new RuntimeException(ex);
                         }
