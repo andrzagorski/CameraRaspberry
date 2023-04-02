@@ -13,11 +13,21 @@ public class CaptureVideo {
     // http purposes
     public static boolean httpstream = false;
     private static HttpStreamServer httpStreamService= new HttpStreamServer();
+    private static Thread httpStreamThread;
+
     static VideoCapture videoCapture;
     static Timer tmrVideoProcess;
 
     public static void  startThreadStream() {
-        new Thread(httpStreamService).start();
+        httpStreamThread = new Thread(httpStreamService);
+        httpStreamThread.start();
+    }
+    public static void StopStreamServer() {
+        httpstream=false;
+
+        if (httpStreamThread != null && httpStreamThread.isAlive()) {
+            httpStreamThread.interrupt();
+        }
     }
 
     public static BufferedImage toBufferedImage(IplImage src) {

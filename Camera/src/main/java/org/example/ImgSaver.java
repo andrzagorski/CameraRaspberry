@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.io.File;
 
 public class ImgSaver {
-
     static void saveImg(CanvasFrame window, IplImage img) {
 
         JFileChooser fileChooser = new JFileChooser();
@@ -16,7 +15,5 @@ public class ImgSaver {
             File file = fileChooser.getSelectedFile();
             opencv_imgcodecs.cvSaveImage(file.toString(), img);
         }
-
     }
-
 }

@@ -11,6 +11,5 @@ public  class InitCam {
         cam.setImageHeight(height);
         cam.start();
         sleep(200);
-
     }
 }

@@ -66,7 +66,6 @@ public class HttpStreamServer implements Runnable {
         } catch (IOException e) {
             return;
         }
-
     }
 
     public void stopStreamingServer() throws IOException {

@@ -3,18 +3,10 @@ package org.example;
 import org.bytedeco.javacv.*;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.opencv.opencv_core.IplImage;
-import org.opencv.core.Mat;
-import org.opencv.videoio.VideoCapture;
-
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CaptureFrame {
-
 private static IplImage img = null;
 
     static void SaveImage(CanvasFrame window) {
@@ -22,14 +14,11 @@ private static IplImage img = null;
             ImgSaver.saveImg(window,img);
         }
     }
-
     static void Capture(FrameGrabber[] cam, Frame[] GrabbedFrame, AtomicBoolean priorityQueue, CanvasFrame window,JPanel right, int prevWidth, int prevHeight, int MAX_WIDTH, int MAX_HEIGHT, Object lock) {
 
         CanvasFrame canvasFrame = new CanvasFrame("a");
         canvasFrame.setVisible(false);
         right.add(canvasFrame.getCanvas());
-
-
         Runnable runnableCapturingImage = new Runnable() {
             @Override
             public void run() {
