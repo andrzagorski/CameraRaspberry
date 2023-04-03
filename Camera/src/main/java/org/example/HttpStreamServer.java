@@ -3,6 +3,7 @@ package org.example;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -18,7 +19,10 @@ public class HttpStreamServer implements Runnable {
     public HttpStreamServer() {}
 
     public void startStreamingServer() throws IOException {
-        serverSocket = new ServerSocket(8080);
+
+        InetAddress addr = InetAddress.getByName("157.158.126.82"); // specify address.
+
+        serverSocket = new ServerSocket(8080, 50, addr);
         socket = serverSocket.accept();
         writeHeader(socket.getOutputStream(), boundary);
     }
