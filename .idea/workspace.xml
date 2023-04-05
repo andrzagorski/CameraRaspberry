@@ -51,12 +51,12 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/Andrew/Documents/GitHub/CameraRaspberry/opencv/build/java/x64",
+    "last_opened_file_path": "C:/Users/Andrew/Documents/GitHub/CameraRaspberry/opencv/build/java/opencv-451.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.44367817",
     "settings.editor.selected.configurable": "reference.idesettings.quicklists",
@@ -143,6 +143,7 @@
       <workItem from="1680465417282" duration="1079000" />
       <workItem from="1680512776004" duration="2461000" />
       <workItem from="1680622675207" duration="1683000" />
+      <workItem from="1680678107795" duration="2438000" />
     </task>
     <servers />
   </component>
