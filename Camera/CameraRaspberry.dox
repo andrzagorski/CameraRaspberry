@@ -1,53 +1,23 @@
 /**
-\mainpage OOStatLib - Biblioteka narzędzi i testów statystycznych
+\mainpage CameraRaspberry - obsługa kamery mikroskopowej
 
-OOStatLib to generyczna biblioteka do języka C++ w standardzie ISO C++20 pozwalająca programiście na używanie gotowych algorytmów z dziedziny statystyki w sposób
-jak najbardziej dopasowany do środowiska, którym posługuje się użytkownik.
-Programista może używać testów, jako funkcje statyczne np.
+CameraRaspberry to aplikacja desktopowa oparta o okienka, która umożliwia obsługę prototypowej kamery mikroskopowej na
+plarformie RasbperryPi.
 
-```
-	bool wynik_sw = sl::shapiro_wilk<double, double>::evaluate(dane, poziom_istotnosci);
-```
+Funkcjonalność aplikacji jest następująca:
 
-Jak i również używać algorytmów w sposób zorientowany obiektowo i wtedy mieć możliwość zapisania ostatnio obliczonego wyniku.
+- przechwyt serii klatek z sensora graficznego kamery oraz wyświetlanie ich w postaci filmu na ekranie,
+- możliwość zapisu przechwyconej klatki w jednych z dostępnych rozdzielczości sensora,
+- nagrywanie filmu na dysk jednej z dostępnych rozdzielczości sensora,
+- udostępnianie serii klatek z kamerki w czasie rzeczywistym na webserwerze w sieci lokalnej.
 
-```
-	sl::shapiro_wilk<double, double> sw(dane, poziom_istotnosci);
-	sw();
-	bool wynik_sw = sw.get_last_result();
-```
+Technologie zastosowane w projekcie to:
 
-W wersji 0.1 biblioteki zostały zaimplementowane proste testy statystyczne:
-- test Shapiro-Wilka,
-- test dla par obserwacji,
-- test istotności dla średniej,
-- test istotności dla wariancji.
+- Java,
+- Swing
+- AWT
+- OpenCV
 
-Zostały również zaimplementowane proste algorytmy pomocnicze:
-- średnia,
-- wariancja,
-- odchylenie standardowe.
-
-Wszystkie testy ustalają poziom istotności za pomocą typu sl::significance - typu wyliczeniowego, który zawiera w sobie
-wszystkie popularne wartości poziomu istotności:
-- 0,01;
-- 0,02;
-- 0,05;
-- 0,1;
-
-Typy zmiennych są zaimplementowane jako koncepty z C++20. Narzędzia z biblioteki standardowej używane jako zależności w bibliotece to:
-- type_traits,
-- concepts,
-- vector,
-- concepts,
-- cmath,
-- cassert,
-- algorithm,
-- cstddef,
-- memory.
-
-Istotną brakującą rzeczą w wersji 0.1 to brak możliwości czytania danych z pliku. **STRONA JAK I BIBLIOTEKA W TRAKCIE BUDOWY**
-
-<center>![](https://i.gifer.com/LY6.gif)</center>
+![Widok głównego okna](img/main.png)
 
 */
