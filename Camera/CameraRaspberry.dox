@@ -1,6 +1,7 @@
 /**
 \mainpage CameraRaspberry - obsługa kamery mikroskopowej
 
+## Wstęp
 CameraRaspberry to aplikacja desktopowa oparta o okienka, która umożliwia obsługę prototypowej kamery mikroskopowej na
 plarformie RasbperryPi.
 
@@ -18,6 +19,16 @@ Technologie zastosowane w projekcie to:
 - AWT
 - OpenCV
 
+## Obsługa aplikacji
+
 ![Widok głównego okna](img/main.png)
+
+Opis przycisków:
+
+Initialize Camera - pozwala na zainicjalizowanie działania sensora. Po naciśnięciu tego przyciisku w głównej części
+okna powinien pojawić się rzeczywisty obraz z kamery. Powinny również zostać odblokowane przyciski do przechwytu obrazu
+oraz przyciski do obsługi serwera http.
+
+
 
 */
