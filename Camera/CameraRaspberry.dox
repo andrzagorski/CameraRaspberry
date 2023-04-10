@@ -26,9 +26,28 @@ Technologie zastosowane w projekcie to:
 Opis przycisków:
 
 Initialize Camera - pozwala na zainicjalizowanie działania sensora. Po naciśnięciu tego przyciisku w głównej części
-okna powinien pojawić się rzeczywisty obraz z kamery. Powinny również zostać odblokowane przyciski do przechwytu obrazu
-oraz przyciski do obsługi serwera http.
+okna powinien pojawić się rzeczywisty obraz z kamery na pomarańczowym tle. Powinny również zostać odblokowane
+przyciski do przechwytu obrazu oraz przyciski do obsługi serwera http.
 
+![Widok kamery po inicjalizacji](img/init.png)
 
+Capture image - pozwala na zatrzymanie klatki w danym momencie. Lista pod przyciskiem pozwala wybrać rozdzielczość
+przechwyconego obrazu. Zatrzymana klatka powinna pojawić się po prawej stronie na żółtym tle.
+
+![Widok przechwyconego zdjęcia](img/capture.png)
+
+Save captured image - pozwala na zapis klatki w postaci zdjęcia w wybranym przez użytkownika folderze (file dialog).
+
+![Widok okna wyboru folderu do zapisu zdjęcia](img/pic.png)
+
+Make video - rozpoczyna nagrywanie wideo w ustalonej przez użytkownika rozdzielczości w liście poniżej. Powinno pojawić
+się nowe okno z podglądem nagrania. Wyjście z tego okna przerywa nagranie.
+
+![Widok nagrywanego wideo](img/video.png)
+
+Start http stream server - pozwana na rozpoczęcie udostępniania obrazu z kamery w sieci lokalnej.
+Stop http stream server - pozwana na przerwanie udostępniania obrazu z kamery w sieci lokalnej.
+
+![Widok udostępnionego obrazu przez protokół http](img/http.png)
 
 */
