@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="x86">
+  <library name="opencv-451">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/opencv/build/java/opencv-451.jar!/" />
     </CLASSES>

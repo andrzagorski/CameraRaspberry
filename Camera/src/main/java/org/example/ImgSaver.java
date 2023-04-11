@@ -13,7 +13,12 @@ public class ImgSaver {
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showSaveDialog(window) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            opencv_imgcodecs.cvSaveImage(file.toString(), img);
+            String sciezka = file.toString();
+            if(sciezka.contains(".jpg") || sciezka.contains(".png")){
+                opencv_imgcodecs.cvSaveImage(file.toString(), img);
+            }
+            else
+            opencv_imgcodecs.cvSaveImage(file.toString()+".jpg", img);
         }
     }
 }

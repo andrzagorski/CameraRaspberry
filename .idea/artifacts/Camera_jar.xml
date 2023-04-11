@@ -181,8 +181,8 @@
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/bytedeco/javacpp-platform/1.5.5/javacpp-platform-1.5.5.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/bytedeco/artoolkitplus/2.3.1-1.5.5/artoolkitplus-2.3.1-1.5.5-linux-armhf.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/bytedeco/javacpp/1.5.5/javacpp-1.5.5-macosx-arm64.jar" path-in-jar="/" />
-      <element id="file-copy" path="$PROJECT_DIR$/opencv/build/java/x64/opencv_java451.dll" />
       <element id="file-copy" path="$PROJECT_DIR$/opencv/build/java/opencv-451.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/opencv/build/java/x64/opencv_java451.dll" />
     </root>
   </artifact>
 </component>

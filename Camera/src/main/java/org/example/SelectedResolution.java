@@ -26,4 +26,26 @@ public class SelectedResolution {
             return width + "x" + height;
         }
     }
+    enum ResolutionOptionVideo { // Unfortunately Video works at 1080p max
+        RES_640x480(640, 480),
+        RES_1280x720(1280, 720),
+        RES_1920x1080(1920, 1080);
+
+        private final int width;
+        private final int height;
+        ResolutionOptionVideo(int width, int height) {
+            this.width = width;
+            this.height = height;
+        }
+        public int getWidth() {
+            return width;
+        }
+        public int getHeight() {
+            return height;
+        }
+        @Override
+        public String toString() {
+            return width + "x" + height;
+        }
+    }
 }
