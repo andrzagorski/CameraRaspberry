@@ -1,7 +1,7 @@
 package org.example;
 
 /**
-	\file Main.java
+	\file SelectedResolution.java
 	\brief Plik klasą definiującą rozdzielczość ekranu.
 */
 
@@ -11,7 +11,6 @@ package org.example;
 	z enum z domyślnymi rozdzielczościami do wyboru w GUI.
 */
 public class SelectedResolution {
-
 	//! Domyślne rozdzielczości.
     enum ResolutionOption {
         RES_640x480(640, 480),

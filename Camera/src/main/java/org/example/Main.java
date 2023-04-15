@@ -28,8 +28,10 @@ public class Main {
 	//! Wysokość wyświetlanego okna
     static int PREV_HEIGHT=480;
 
+
     static final AtomicBoolean priority = new AtomicBoolean(false);
 
+	//! Główna funkcja programu.
     public static void main(String[] args) throws FrameGrabber.Exception, InterruptedException {
 
         Object lock = new Object();
