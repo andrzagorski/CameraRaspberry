@@ -1,8 +1,8 @@
 package org.example;
 
 import org.bytedeco.javacv.FrameGrabber;
-
 import static java.lang.Thread.sleep;
+
 
 public  class InitCam {
 

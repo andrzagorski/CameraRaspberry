@@ -9,9 +9,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+	\file Main.java
+	\brief Plik z głównym programem
+	
+	gdzie napisany został też frontend z oknami i funkcjonalnymi przyciskami.
+*/
+
+/**
+	\brief Klasa przechowująca kod głównego programu
+	
+	oraz cały frontend z oknem i funkcjonalnymi przyciskami. Na początku rozmiar głównego okna to 640x480
+*/
 public class Main {
+	//! Szerokość wyświetlanego okna
     static int PREV_WIDTH= 640;
+
+	//! Wysokość wyświetlanego okna
     static int PREV_HEIGHT=480;
+
     static final AtomicBoolean priority = new AtomicBoolean(false);
 
     public static void main(String[] args) throws FrameGrabber.Exception, InterruptedException {
