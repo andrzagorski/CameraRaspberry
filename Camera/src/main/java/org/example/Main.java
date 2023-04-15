@@ -4,10 +4,16 @@ import org.bytedeco.javacv.*;
 import org.bytedeco.javacv.Frame;
 import org.opencv.core.Core;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import static org.opencv.highgui.HighGui.destroyAllWindows;
+
+import static org.opencv.highgui.HighGui.destroyAllWindows;
 
 /**
 	\file Main.java
@@ -29,6 +35,10 @@ public class Main {
     static int PREV_HEIGHT=480;
 
 
+    static int OCT_A=157;
+    static int OCT_B=158;
+    static int OCT_C=126;
+    static int OCT_D=82;
     static final AtomicBoolean priority = new AtomicBoolean(false);
 
 	//! Główna funkcja programu.
@@ -51,7 +61,16 @@ public class Main {
         jButtonGrab.setBounds(20, 140, 130, 20);
 
         JComboBox<SelectedResolution.ResolutionOption> RecordResolution = new JComboBox<>(SelectedResolution.ResolutionOption.values());
+        JCheckBox watchHQCheckBox = new JCheckBox("Watch HQ");
         JComboBox<SelectedResolution.ResolutionOption> CaptureImageResolution = new JComboBox<>(SelectedResolution.ResolutionOption.values());
+        SpinnerNumberModel model = new SpinnerNumberModel(OCT_A, 0, 255, 1); // zakres od 0 do 255 z krokiem 1
+        SpinnerNumberModel model2 = new SpinnerNumberModel(OCT_B, 0, 255, 1); // zakres od 0 do 255 z krokiem 1
+        SpinnerNumberModel model3 = new SpinnerNumberModel(OCT_C, 0, 255, 1); // zakres od 0 do 255 z krokiem 1
+        SpinnerNumberModel model4 = new SpinnerNumberModel(OCT_D, 0, 255, 1); // zakres od 0 do 255 z krokiem 1
+        JSpinner firstOctetIp = new JSpinner(model);
+        JSpinner secondOctetIp = new JSpinner(model2);
+        JSpinner thirdOctetIp = new JSpinner(model3);
+        JSpinner fourthOctetIp = new JSpinner(model4);
 
         RecordResolution.setSelectedIndex(0);
         CaptureImageResolution.setSelectedIndex(0);
@@ -64,17 +83,43 @@ public class Main {
         JBtnStopHttpServices.setBounds(100, 100, 150, 20);
         JBtnStopHttpServices.setEnabled(false);
 
-        //BOT SIDE
-        JPanel buttonPanelTop = new JPanel(new GridLayout(3, 0));
-        buttonPanelTop.add(jButtonStartRecord);
-        buttonPanelTop.add(jButtonGrab);
-        buttonPanelTop.add(jButtonChooseCamera);
-        buttonPanelTop.add(RecordResolution);
-        buttonPanelTop.add(CaptureImageResolution);
-        buttonPanelTop.add(JbuttonSaveCaptured);
-        buttonPanelTop.add(JBtnStartHttpServices);
-        buttonPanelTop.add(JBtnStopHttpServices);
+        JPanel ipPanel = new JPanel(new GridLayout(0, 4));
+        ipPanel.add(firstOctetIp);
+        ipPanel.add(secondOctetIp);
+        ipPanel.add(thirdOctetIp);
+        ipPanel.add(fourthOctetIp);
 
+        JPanel videoPanel = new JPanel(new GridLayout(3, 0));
+        videoPanel.add(jButtonStartRecord); // Make video
+        videoPanel.add(RecordResolution);
+        videoPanel.add(watchHQCheckBox);
+        videoPanel.setBackground(Color.DARK_GRAY);
+
+        JPanel imagePanel = new JPanel(new GridLayout(3, 0));
+        imagePanel.add(jButtonGrab); // Capture Image!
+        imagePanel.add(CaptureImageResolution);
+        imagePanel.add(JbuttonSaveCaptured);
+        imagePanel.setBackground(Color.PINK);
+
+        JPanel httpStreamServerPanel= new JPanel(new GridLayout(3, 0));
+        httpStreamServerPanel.add(JBtnStartHttpServices);
+        httpStreamServerPanel.add(JBtnStopHttpServices);
+        httpStreamServerPanel.add(ipPanel);
+        httpStreamServerPanel.setBackground(Color.DARK_GRAY);
+
+        //buttonPanelTOP
+        JPanel buttonPanelTop = new JPanel(new GridLayout(2, 2,15,15));
+
+        buttonPanelTop.add(jButtonChooseCamera);//Initialize Camera
+        buttonPanelTop.add(videoPanel);
+        buttonPanelTop.add(imagePanel);
+        buttonPanelTop.add(httpStreamServerPanel);
+        buttonPanelTop.setVisible(true);
+
+
+
+
+        //BOT SIDE
         JPanel BottomSidePanel = new JPanel();
         BottomSidePanel.setBackground(Color.DARK_GRAY);
 
@@ -139,8 +184,9 @@ public class Main {
                 System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
                 SelectedResolution.ResolutionOption RecordingResolution = (SelectedResolution.ResolutionOption)RecordResolution.getSelectedItem();
+                Boolean showInHQ = watchHQCheckBox.isSelected();
+                VideoRecording.Record(cam,GrabbedFrame,priority,showInHQ,window,RecordingResolution.getWidth(),RecordingResolution.getHeight(),10,100,lock);
 
-                VideoRecording.Record(cam,GrabbedFrame,priority,window,RecordingResolution.getWidth(),RecordingResolution.getHeight(),10,100,lock);
             }
         });
         JbuttonSaveCaptured.addActionListener(new ActionListener() {
@@ -166,6 +212,30 @@ public class Main {
                 CaptureVideo.StopStreamServer();
                 JBtnStartHttpServices.setEnabled(true);
                 JBtnStopHttpServices.setEnabled(false);
+            }
+        });
+        firstOctetIp.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                OCT_A = (int)firstOctetIp.getValue();
+            }
+        });
+        secondOctetIp.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                OCT_A = (int)secondOctetIp.getValue();
+            }
+        });
+        thirdOctetIp.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                OCT_A = (int)thirdOctetIp.getValue();
+            }
+        });
+        fourthOctetIp.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                OCT_A = (int)fourthOctetIp.getValue();
             }
         });
     }

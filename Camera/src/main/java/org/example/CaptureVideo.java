@@ -8,11 +8,13 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static org.example.Main.*;
+
 public class CaptureVideo {
 
     // http purposes
     public static boolean httpstream = false;
-    private static HttpStreamServer httpStreamService= new HttpStreamServer();
+    private static HttpStreamServer httpStreamService= new HttpStreamServer(OCT_A,OCT_B,OCT_C,OCT_D);
     private static Thread httpStreamThread;
 
     static VideoCapture videoCapture;

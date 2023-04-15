@@ -9,6 +9,7 @@ import java.net.Socket;
 
 public class HttpStreamServer implements Runnable {
 
+    private int octA,octB,octC,octD;
     private ServerSocket serverSocket;
     private Socket socket;
     private final String boundary = "stream";
@@ -16,11 +17,17 @@ public class HttpStreamServer implements Runnable {
     public BufferedImage imag;
 
 
-    public HttpStreamServer() {}
+
+    public HttpStreamServer(int octA, int octB, int octC, int octD) {
+        this.octA = octA;
+        this.octB = octB;
+        this.octC = octC;
+        this.octD = octD;
+    }
 
     public void startStreamingServer() throws IOException {
 
-        InetAddress addr = InetAddress.getByName("157.158.126.82"); // specify address.
+        InetAddress addr = InetAddress.getByName(octA+"."+octB+"."+octC+"."+octD); // specify address.
 
         serverSocket = new ServerSocket(8080, 50, addr);
         socket = serverSocket.accept();

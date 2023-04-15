@@ -9,7 +9,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86f3a19e-72e6-4bec-8059-109e9c307d47" name="Changes" comment="" />
+    <list default="true" id="86f3a19e-72e6-4bec-8059-109e9c307d47" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/CameraRaspberry.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CameraRaspberry.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Camera_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Camera_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/x86.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureVideo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/CaptureVideo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/HttpStreamServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/HttpStreamServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/ImgSaver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/ImgSaver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/SelectedResolution.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/SelectedResolution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/src/main/java/org/example/VideoRecording.java" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/src/main/java/org/example/VideoRecording.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/Camera/target/classes/org/example/CaptureFrame.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,12 +64,12 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/Andrew/Documents/GitHub/CameraRaspberry/opencv/build/java/opencv-451.jar",
+    "last_opened_file_path": "C:/Users/Majkel/Documents/GitHub/CameraRaspberry/opencv/build/java/x64",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Artifacts",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.44367817",
     "settings.editor.selected.configurable": "reference.idesettings.quicklists",
@@ -144,6 +157,7 @@
       <workItem from="1680512776004" duration="2461000" />
       <workItem from="1680622675207" duration="1683000" />
       <workItem from="1680678107795" duration="2438000" />
+      <workItem from="1681224878102" duration="14487000" />
     </task>
     <servers />
   </component>

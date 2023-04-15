@@ -15,8 +15,8 @@ private static IplImage img = null;
         }
     }
     static void Capture(FrameGrabber[] cam, Frame[] GrabbedFrame, AtomicBoolean priorityQueue, CanvasFrame window,JPanel right, int prevWidth, int prevHeight, int MAX_WIDTH, int MAX_HEIGHT, Object lock) {
-
-        CanvasFrame canvasFrame = new CanvasFrame("a");
+        right.removeAll();
+        CanvasFrame canvasFrame = new CanvasFrame("xyz");
         canvasFrame.setVisible(false);
         right.add(canvasFrame.getCanvas());
         Runnable runnableCapturingImage = new Runnable() {
