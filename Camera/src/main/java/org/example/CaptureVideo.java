@@ -16,20 +16,33 @@ import static org.example.Main.*;
 */
 
 /**
-	\brief Klasa abstrachująca przechwytywanie wideo z kamery.
+	\brief Klasa abstrachująca przechwytywanie wideo z kamery
+
+	zawierająca narzędzia niezbędne do transmisji obrazu kamery na serwer HTTP.
 */
 public class CaptureVideo {
+	//! Zmienna pokazująca, czy serwer http wystartował
     public static boolean httpstream = false;
+
+	//! Obiekt klasy HttpStreamServer do transmisji na serwer HTTP.
     private static HttpStreamServer httpStreamService= new HttpStreamServer(OCT_A,OCT_B,OCT_C,OCT_D);
+
+	//! Główny wątek transmisji HTTP.
     private static Thread httpStreamThread;
 
+	//! Obiekt klasy VideoCapture do przechwytu wideo
     static VideoCapture videoCapture;
+
+	//! 
     static Timer tmrVideoProcess;
 
+	//! Funkcja rozpoczynająca transmisję HTTP.
     public static void  startThreadStream() {
         httpStreamThread = new Thread(httpStreamService);
         httpStreamThread.start();
     }
+
+	//! Funkcja kończąca transmisję HTTP.
     public static void StopStreamServer() {
         httpstream=false;
 
@@ -38,6 +51,7 @@ public class CaptureVideo {
         }
     }
 
+	//! Funkcja konwertująca klatkę IplImage do typu BufferedImage.
     public static BufferedImage toBufferedImage(IplImage src) {
         OpenCVFrameConverter.ToIplImage grabberConverter = new OpenCVFrameConverter.ToIplImage();
         Java2DFrameConverter paintConverter = new Java2DFrameConverter();
@@ -45,7 +59,7 @@ public class CaptureVideo {
         return paintConverter.getBufferedImage(frame,1);
     }
 
-
+	//! Główna funkcja wątka przechwycającego klatkę oraz przekazująca klatkę do dalszych części programu
     static void Capture(FrameGrabber[] cam, AtomicBoolean priorityQueue, CanvasFrame window,JPanel left, int prevWidth, int prevHeight, Object lock) {
         left.removeAll();
         CanvasFrame canvasFrame = new CanvasFrame("video");
@@ -118,5 +132,4 @@ public class CaptureVideo {
         };
         new Thread(runnableCapturingVideo).start();
     }
-
-    }
+}
