@@ -7,17 +7,35 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class HttpStreamServer implements Runnable {
+/**
+	\file HttpStreamServer.java
+	\brief Plik z klasą HttpStreamServer.
+*/
 
-    private int octA,octB,octC,octD;
+/**
+	\brief Klasa służąca do wysyłania obrazu z kamery na serwer http w czasie rzeczywistym.
+*/
+public class HttpStreamServer implements Runnable {
+	//! Poszczególne oktetyu adresu IP.
+    private int octA, octB, octC, octD;
+
+	//! Socket serwera do komunikacji sieciowej.
     private ServerSocket serverSocket;
+
+	//! Socket do komunikacji sieciowej.
     private Socket socket;
+
+	//! String ustawiający odpowiednio transmisję.
     private final String boundary = "stream";
+
+	//! Stream do komunikacji z serwerem.
     private OutputStream outputStream;
+
+	//! Klatka do wyświetlenia na serwerze.
     public BufferedImage imag;
 
 
-
+	//! Setter adresu IP
     public HttpStreamServer(int octA, int octB, int octC, int octD) {
         this.octA = octA;
         this.octB = octB;
@@ -25,6 +43,7 @@ public class HttpStreamServer implements Runnable {
         this.octD = octD;
     }
 
+	//! Funkcja rozpoczynająca transmisję na serwer http.
     public void startStreamingServer() throws IOException {
 
         InetAddress addr = InetAddress.getByName(octA+"."+octB+"."+octC+"."+octD); // specify address.
@@ -34,6 +53,7 @@ public class HttpStreamServer implements Runnable {
         writeHeader(socket.getOutputStream(), boundary);
     }
 
+	//! Funkcja wpisująca niezbędne parametry do działania serwera.
     private void writeHeader(OutputStream stream, String boundary) throws IOException {
         stream.write(("HTTP/1.0 200 OK\r\n" +
                 "Connection: close\r\n" +
@@ -47,6 +67,7 @@ public class HttpStreamServer implements Runnable {
                 "--" + boundary + "\r\n").getBytes());
     }
 
+	//! Funkcja wysyłająca obraz z kamery na serwer.
     public void pushImage(BufferedImage frame) throws IOException {
         if (frame == null)
             return;
@@ -66,6 +87,7 @@ public class HttpStreamServer implements Runnable {
         }
     }
 
+	//! Funkcja główna wątka, która cyklicznie wysyła obraz z kamery na serwer.
     public void run() {
         try {
             System.out.print("go to  http://localhost:8080 with browser");
@@ -79,6 +101,7 @@ public class HttpStreamServer implements Runnable {
         }
     }
 
+	//! Funkcja zatrzymująca serwer HTTP.
     public void stopStreamingServer() throws IOException {
         socket.close();
         serverSocket.close();

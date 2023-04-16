@@ -6,14 +6,26 @@ import org.bytedeco.opencv.opencv_core.IplImage;
 import javax.swing.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class CaptureFrame {
-private static IplImage img = null;
+/**
+	\file CaptureFrame.java
+	\brief Plik z klasą CaptureFrame.
+*/
 
+/**
+	\brief Klasa abstrachująca przechwytywanie klatki kamery.
+*/
+public class CaptureFrame {
+	//! Zapisany obraz kamery.
+	private static IplImage img = null;
+
+	//! Funkcja wywołująca klasę ImgSaver zapisująca klatkę na dysku.
     static void SaveImage(CanvasFrame window) {
         if (img!=null) {
             ImgSaver.saveImg(window,img);
         }
     }
+	
+	//! Główna funkcja zbierająca klatkę z kamery.
     static void Capture(FrameGrabber[] cam, Frame[] GrabbedFrame, AtomicBoolean priorityQueue, CanvasFrame window,JPanel right, int prevWidth, int prevHeight, int MAX_WIDTH, int MAX_HEIGHT, Object lock) {
         right.removeAll();
         CanvasFrame canvasFrame = new CanvasFrame("xyz");

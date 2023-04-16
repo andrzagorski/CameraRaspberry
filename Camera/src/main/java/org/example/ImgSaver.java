@@ -7,7 +7,16 @@ import org.bytedeco.opencv.opencv_core.IplImage;
 import javax.swing.*;
 import java.io.File;
 
+/**
+	\file ImgSaver.java
+	\brief Plik z klasą ImgSaver.
+*/
+
+/**
+	\brief Klasa abstrachująca zapisu obrazu przechwyconego z kamery.
+*/
 public class ImgSaver {
+	//! Metoda statyczna wyświetlająca okno do zapisu przechwyconego obrazu podanego w argumencie. 
     static void saveImg(CanvasFrame window, IplImage img) {
 
         JFileChooser fileChooser = new JFileChooser();
