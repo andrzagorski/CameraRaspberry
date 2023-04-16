@@ -10,9 +10,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.example.Main.*;
 
-public class CaptureVideo {
+/**
+	\file CaptureVideo.java
+	\brief Plik z klasą CaptureVideo.
+*/
 
-    // http purposes
+/**
+	\brief Klasa abstrachująca przechwytywanie wideo z kamery.
+*/
+public class CaptureVideo {
     public static boolean httpstream = false;
     private static HttpStreamServer httpStreamService= new HttpStreamServer(OCT_A,OCT_B,OCT_C,OCT_D);
     private static Thread httpStreamThread;

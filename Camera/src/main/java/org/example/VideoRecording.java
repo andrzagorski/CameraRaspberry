@@ -18,12 +18,23 @@ import static org.opencv.highgui.HighGui.*;
 import static org.opencv.videoio.Videoio.CAP_PROP_FRAME_HEIGHT;
 import static org.opencv.videoio.Videoio.CAP_PROP_FRAME_WIDTH;
 
+/**
+	\file VideoRecording.java
+	\brief Plik klasą VideoRecording.
+*/
+
+/**
+	\brief Klasa abstrachująca proces cyklicznego przechwytywania klatek
+
+	i zapisu klatek w postaci wideo.
+*/
 public class VideoRecording {
 
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
+	//! Główna funkcja nagrywająca
     static void Record(FrameGrabber[] cam, Frame[] GrabbedFrame, AtomicBoolean priorityQueue,Boolean showHQ, CanvasFrame window, int RecordWidth, int RecordHeight, int fps, int recordingTime, Object lock) {
         Runnable runnableRecordingVideo = new Runnable() {
 

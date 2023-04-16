@@ -1,3 +1,4 @@
+//! Pakiet, w którym zostały zamknięte wszystkie klasy programu
 package org.example;
 
 import org.bytedeco.javacv.*;
@@ -12,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.opencv.highgui.HighGui.destroyAllWindows;
-
 import static org.opencv.highgui.HighGui.destroyAllWindows;
 
 /**
@@ -34,11 +34,19 @@ public class Main {
 	//! Wysokość wyświetlanego okna
     static int PREV_HEIGHT=480;
 
-
+	//! Oktet A adresu IP.
     static int OCT_A=157;
+
+	//! Oktet B adresu IP.
     static int OCT_B=158;
+
+	//! Oktet C adresu IP.
     static int OCT_C=126;
+
+	//! Oktet D adresu IP.
     static int OCT_D=82;
+
+
     static final AtomicBoolean priority = new AtomicBoolean(false);
 
 	//! Główna funkcja programu.
