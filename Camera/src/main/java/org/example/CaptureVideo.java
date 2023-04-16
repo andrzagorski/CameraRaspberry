@@ -33,9 +33,6 @@ public class CaptureVideo {
 	//! Obiekt klasy VideoCapture do przechwytu wideo
     static VideoCapture videoCapture;
 
-	//! 
-    static Timer tmrVideoProcess;
-
 	//! Funkcja rozpoczynająca transmisję HTTP.
     public static void  startThreadStream() {
         httpStreamThread = new Thread(httpStreamService);
