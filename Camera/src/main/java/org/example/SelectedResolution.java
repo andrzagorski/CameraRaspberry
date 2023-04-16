@@ -50,7 +50,7 @@ public class SelectedResolution {
         }
     }
 
-
+	//! Domyślne rozdzielczości dla wideo (obsługa do 1080p).
     enum ResolutionOptionVideo { // Unfortunately Video works at 1080p max
         RES_640x480(640, 480),
         RES_1280x720(1280, 720),
