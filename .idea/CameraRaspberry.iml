@@ -8,15 +8,19 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/opencv/build/java/opencv-451.jar!/" />
+          <root url="jar://$MODULE_DIR$/out/artifacts/Camera_jar/x64/opencv-451.jar!/" />
+          <root url="file://$MODULE_DIR$/out/artifacts/Camera_jar/x64" />
         </CLASSES>
         <JAVADOC />
         <NATIVE>
-          <root url="file://$MODULE_DIR$/opencv/build/java/x64" />
+          <root url="file://$MODULE_DIR$/out/artifacts/Camera_jar/x64" />
         </NATIVE>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/opencv/build/java/opencv-451.jar!/" />
+          <root url="jar://$MODULE_DIR$/out/artifacts/Camera_jar/x64/opencv-451.jar!/" />
+          <root url="file://$MODULE_DIR$/out/artifacts/Camera_jar/x64" />
         </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/out/artifacts/Camera_jar/x64" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/out/artifacts/Camera_jar/x64" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>

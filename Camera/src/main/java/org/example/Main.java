@@ -231,19 +231,19 @@ public class Main {
         secondOctetIp.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                OCT_A = (int)secondOctetIp.getValue();
+                OCT_B = (int)secondOctetIp.getValue();
             }
         });
         thirdOctetIp.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                OCT_A = (int)thirdOctetIp.getValue();
+                OCT_C = (int)thirdOctetIp.getValue();
             }
         });
         fourthOctetIp.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                OCT_A = (int)fourthOctetIp.getValue();
+                OCT_D = (int)fourthOctetIp.getValue();
             }
         });
     }
