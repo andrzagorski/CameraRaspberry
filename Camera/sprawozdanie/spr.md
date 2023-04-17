@@ -50,34 +50,37 @@ Podział obowiązków w projekcie był następujący:
 
 # 2. Obsługa aplikacji
 
-![Widok głównego okna](../img/main.png)
-
 Opis przycisków:
 
 Initialize Camera - pozwala na zainicjalizowanie działania sensora. Po naciśnięciu tego przyciisku w głównej części
 okna powinien pojawić się rzeczywisty obraz z kamery na pomarańczowym tle. Powinny również zostać odblokowane
 przyciski do przechwytu obrazu oraz przyciski do obsługi serwera http.
 
-![Widok kamery po inicjalizacji](../img/init.png)
+![Widok kamery po inicjalizacji](img/init.png)
+\newpage
 
 Capture image - pozwala na zatrzymanie klatki w danym momencie. Lista pod przyciskiem pozwala wybrać rozdzielczość
 przechwyconego obrazu. Zatrzymana klatka powinna pojawić się po prawej stronie na żółtym tle.
 
-![Widok przechwyconego zdjęcia](../img/capture.png)
+![Widok przechwyconego zdjęcia](img/capture.png)
 
 Save captured image - pozwala na zapis klatki w postaci zdjęcia w wybranym przez użytkownika folderze (file dialog).
 
-![Widok okna wyboru folderu do zapisu zdjęcia](../img/pic.png)
+![Widok okna wyboru folderu do zapisu zdjęcia](img/pic.png)
 
 Make video - rozpoczyna nagrywanie wideo w ustalonej przez użytkownika rozdzielczości w liście poniżej. Powinno pojawić
 się nowe okno z podglądem nagrania. Wyjście z tego okna przerywa nagranie.
 
-![Widok nagrywanego wideo](../img/video.png)
+Whatch HQ - zaznaczenie powoduje, że oglądane wideo jest w rozdzielczości HD.
+
+![Widok nagrywanego wideo](img/video.png)
 
 Start http stream server - pozwana na rozpoczęcie udostępniania obrazu z kamery w sieci lokalnej.
 Stop http stream server - pozwana na przerwanie udostępniania obrazu z kamery w sieci lokalnej.
+Pod przyciskiem "Stop http stream server" można wybrać adres IP, na jaki zostanie udostępniony
+obraz kamery.
 
-![Widok udostępnionego obrazu przez protokół http](../img/http.png)
+![Widok udostępnionego obrazu przez protokół http](img/http.png)
 
 # 3. Rozwiązania implementacyjne CameraRaspberry
 
@@ -91,18 +94,19 @@ Technologie zastosowane w projekcie to:
 - OpenCV
 
 ## 3.2 Diagram klas
-![Diagram klas](../img/main.png)
+Zrobić diagram klas
+<!-- ![Diagram klas]() -->
 
 ## 3.3. Wielowątkowość
-Aby program działał prawidłowo. Należało poszczególne części programu uruchamiać w w osobnych
+Aby program działał prawidłowo. Należało poszczególne części programu uruchamiać w osobnych
 wątkach. Te części to:
 
 - bierzące wyświetlanie aktualnego obrazu kamery na ekranie,
 - zapis poszczególnych klatek,
 - rejestracja wideo,
-- transmisja zapisanych klatek na serwerze hTTP.
+- transmisja zapisanych klatek na serwerze HTTP.
 
 
 
 # Wnioski
-
+Napisać wnioski i, że arducam nie działa i że problemy
