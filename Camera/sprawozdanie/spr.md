@@ -10,15 +10,15 @@ header-includes: |
 	\usepackage{wrapfig}
 	\usepackage{longtable}
 author: |
-	| Artur Kuś
 	| Andrzej Zagórski
 	| Michał Lubczyński
+	| Artur Kuś
 date: "17.04.2023"
 ---
 
 <!-- \begin{vfill}
 	\begin{raggedleft}
-	IPpp sem. 5 \\*
+	IPpp sem. 6 \\*
 	sekcja 4 \\*
 	Andrzej Zagórski \\*
 	Michał Lubczyński \\*
@@ -56,31 +56,35 @@ Initialize Camera - pozwala na zainicjalizowanie działania sensora. Po naciśni
 okna powinien pojawić się rzeczywisty obraz z kamery na pomarańczowym tle. Powinny również zostać odblokowane
 przyciski do przechwytu obrazu oraz przyciski do obsługi serwera http.
 
-![Widok kamery po inicjalizacji](img/init.png)
+![Widok kamery po inicjalizacji](../img/init.png)
 \newpage
 
 Capture image - pozwala na zatrzymanie klatki w danym momencie. Lista pod przyciskiem pozwala wybrać rozdzielczość
 przechwyconego obrazu. Zatrzymana klatka powinna pojawić się po prawej stronie na żółtym tle.
 
-![Widok przechwyconego zdjęcia](img/capture.png)
+![Widok przechwyconego zdjęcia](../img/capture.png)
+\newpage
 
 Save captured image - pozwala na zapis klatki w postaci zdjęcia w wybranym przez użytkownika folderze (file dialog).
 
-![Widok okna wyboru folderu do zapisu zdjęcia](img/pic.png)
+![Widok okna wyboru folderu do zapisu zdjęcia](../img/pic.png)
+\newpage
 
 Make video - rozpoczyna nagrywanie wideo w ustalonej przez użytkownika rozdzielczości w liście poniżej. Powinno pojawić
 się nowe okno z podglądem nagrania. Wyjście z tego okna przerywa nagranie.
 
 Whatch HQ - zaznaczenie powoduje, że oglądane wideo jest w rozdzielczości HD.
 
-![Widok nagrywanego wideo](img/video.png)
+![Widok nagrywanego wideo](../img/video.png)
+\newpage
 
 Start http stream server - pozwana na rozpoczęcie udostępniania obrazu z kamery w sieci lokalnej.
 Stop http stream server - pozwana na przerwanie udostępniania obrazu z kamery w sieci lokalnej.
 Pod przyciskiem "Stop http stream server" można wybrać adres IP, na jaki zostanie udostępniony
 obraz kamery.
 
-![Widok udostępnionego obrazu przez protokół http](img/http.png)
+![Widok udostępnionego obrazu przez protokół http](../img/http.png)
+\newpage
 
 # 3. Rozwiązania implementacyjne CameraRaspberry
 
@@ -106,7 +110,88 @@ wątkach. Te części to:
 - rejestracja wideo,
 - transmisja zapisanych klatek na serwerze HTTP.
 
+Aby program mógł działać wielowątkowo, klasa z metodą, którą chcemy uruchomić w nowym wątku musi
+implementować w języku Java interfejs ```Runnable``` oraz zaimplementować metodę ```run()``` która
+zostanie uruchomiona i może działać dopóki się nie skończy, lub jej nie przerwiemy wykonując na
+klasie polecenie ```interrupt()```. Przykład działania w kodzie programu - transmisja obrazu na
+serwer HTTP:
 
+```java
+public class HttpStreamServer implements Runnable {
+	...
+    //! Klatka do wyświetlenia na serwerze.
+    public BufferedImage imag;
 
-# Wnioski
-Napisać wnioski i, że arducam nie działa i że problemy
+    //! Funkcja rozpoczynająca transmisję na serwer http.
+    public void startStreamingServer() throws IOException {
+		...
+	}
+    
+    //! Funkcja główna wątka, która cyklicznie wysyła obraz z kamery na serwer.
+    public void run() {
+        try {
+            ...
+            startStreamingServer();
+            while (true) {
+                pushImage(imag);
+            }
+        } catch (IOException e) {
+            ...
+        }
+    }
+	...
+}
+```
+
+Należało też rozwiązać problem współdzielenia pamięci przez w.w wątki, aby nie dochodziło do
+odczytywania niepoprawnych danych. Do tego użyliśmy zmiennych typu ```AtomicBoolean```,
+które pomagają w priorytetyzowaniu tego, który wątek powinien mieć dostęp do zasobu.
+Przykład użycia w programie (przechwytywanie klatek z kamery):
+
+```java
+static void Capture(
+	FrameGrabber[] cam,
+	Frame[] GrabbedFrame,
+	AtomicBoolean priorityQueue,
+	CanvasFrame window,
+	JPanel right,
+	int prevWidth,
+	int prevHeight, 
+	int MAX_WIDTH, 
+	int MAX_HEIGHT, 
+	Object lock
+) {
+	...
+	Runnable runnableCapturingImage = new Runnable() {
+		@Override
+		public void run() {
+			...
+			priorityQueue.set(true);
+			synchronized (lock){
+				...
+				// Przechwytywanie klatki i konwertowanie do postaci
+				// dającej się wyświetlać w panelu okienkowym
+				...
+				priorityQueue.set(false);
+				lock.notifyAll();
+			}
+		}
+	};
+	try{
+		new Thread(runnableCapturingImage).start();
+	} catch (Exception exception) {}
+}
+```
+
+# 5. Wnioski
+Jeżeli chodzi o ogólne założenia, program działa prawidłowo. Obraz z kametki jest
+poprawnie przetwarzany oraz przesyłany po protokole HTTP. Program spisuje się dobrze
+z większością urządzeń USB dzięki użyciu biblioteki OpenCV.
+
+Niestety nie został rozwiązany przez nas problem dotyczący uruchomienia programu na
+konkretnym sprzęcie, do którego program ten był przeznaczony (kamera dołączana do
+Raspberry PI marki ArduCam), która pomimo zainstalowania odpowiednich sterowników, które
+są zalecane przez producenta, nie chce się uruchomić w napisanym przez nas środowisku,
+ani w samym systemie Raspberry. Jest to natomiast problem natury sprzętowej, więc można
+go pominąć przy analizie programu, jako że udało się przetestować go używając innego
+sprzętu spełniającego wymagania.
