@@ -198,7 +198,7 @@ while(priorityQueue.get()) {
 ...
 ```
 
-# 5. Wnioski
+# 4. Wnioski
 Jeżeli chodzi o ogólne założenia, program działa prawidłowo. Obraz z kametki jest
 poprawnie przetwarzany oraz przesyłany po protokole HTTP. Program spisuje się dobrze
 z większością urządzeń USB dzięki użyciu biblioteki OpenCV.
