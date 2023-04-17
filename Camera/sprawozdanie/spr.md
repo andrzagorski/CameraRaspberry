@@ -84,7 +84,6 @@ Pod przyciskiem "Stop http stream server" można wybrać adres IP, na jaki zosta
 obraz kamery.
 
 ![Widok udostępnionego obrazu przez protokół http](../img/http.png)
-\newpage
 
 # 3. Rozwiązania implementacyjne CameraRaspberry
 
@@ -98,8 +97,8 @@ Technologie zastosowane w projekcie to:
 - OpenCV
 
 ## 3.2 Diagram klas
-Zrobić diagram klas
-<!-- ![Diagram klas]() -->
+![Diagram klas](../img/uml.png)
+\newpage
 
 ## 3.3. Wielowątkowość
 Aby program działał prawidłowo. Należało poszczególne części programu uruchamiać w osobnych
