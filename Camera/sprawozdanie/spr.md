@@ -183,6 +183,21 @@ static void Capture(
 }
 ```
 
+Tutaj jest ustawiana kolejka na ```true``` dopóki wątek nie wykona sekcji krytycznej,
+a jeżeli inny wątek chce się do niego dostać, to musi czekać:
+
+```java
+...
+while(priorityQueue.get()) {
+	try {
+		lock.wait();
+	} catch (InterruptedException e) {
+		throw new RuntimeException(e);
+	}
+}
+...
+```
+
 # 5. Wnioski
 Jeżeli chodzi o ogólne założenia, program działa prawidłowo. Obraz z kametki jest
 poprawnie przetwarzany oraz przesyłany po protokole HTTP. Program spisuje się dobrze
