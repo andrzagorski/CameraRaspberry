@@ -21,8 +21,6 @@ Technologie zastosowane w projekcie to:
 
 ## Obsługa aplikacji
 
-![Widok głównego okna](img/main.png)
-
 Opis przycisków:
 
 Initialize Camera - pozwala na zainicjalizowanie działania sensora. Po naciśnięciu tego przyciisku w głównej części
@@ -43,10 +41,14 @@ Save captured image - pozwala na zapis klatki w postaci zdjęcia w wybranym prze
 Make video - rozpoczyna nagrywanie wideo w ustalonej przez użytkownika rozdzielczości w liście poniżej. Powinno pojawić
 się nowe okno z podglądem nagrania. Wyjście z tego okna przerywa nagranie.
 
+Whatch HQ - zaznaczenie powoduje, że oglądane wideo jest w rozdzielczości HD.
+
 ![Widok nagrywanego wideo](img/video.png)
 
 Start http stream server - pozwana na rozpoczęcie udostępniania obrazu z kamery w sieci lokalnej.
 Stop http stream server - pozwana na przerwanie udostępniania obrazu z kamery w sieci lokalnej.
+Pod przyciskiem "Stop http stream server" można wybrać adres IP, na jaki zostanie udostępniony
+obraz kamery.
 
 ![Widok udostępnionego obrazu przez protokół http](img/http.png)
 
