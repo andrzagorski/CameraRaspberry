@@ -1,7 +1,4 @@
 ---
-title: |
-	<center>Raport końcowy z projektu z przedmiotu</center>
-	<center>"Programowanie równoległe i rozproszone"</center>
 geometry: margin=2cm
 header-includes: |
 	\usepackage{polski}
@@ -9,11 +6,6 @@ header-includes: |
 	\usepackage{multicol}
 	\usepackage{wrapfig}
 	\usepackage{longtable}
-author: |
-	| Andrzej Zagórski
-	| Michał Lubczyński
-	| Artur Kuś
-date: "17.04.2023"
 ---
 
 <!-- \begin{vfill}
@@ -26,17 +18,19 @@ date: "17.04.2023"
 	\end{raggedleft}
 \end{vfill} -->
 
+![strona tytulowa](../img/title.png)
 \newpage
 
 # 1. Wstęp
 
 ## 1.1. Założenia ogólne
-CameraRaspberry to aplikacja desktopowa oparta o okienka, która umożliwia obsługę prototypowej kamery mikroskopowej na
-plarformie RasbperryPi.
+CameraRaspberry to aplikacja desktopowa oparta o okienka, która umożliwia obsługę
+prototypowej kamery mikroskopowej na plarformie RasbperryPi.
 
 Funkcjonalność aplikacji jest następująca:
 
-- przechwyt serii klatek z sensora graficznego kamery oraz wyświetlanie ich w postaci filmu na ekranie,
+- przechwyt serii klatek z sensora graficznego kamery oraz wyświetlanie ich w postaci
+filmu na ekranie,
 - możliwość zapisu przechwyconej klatki w jednych z dostępnych rozdzielczości sensora,
 - nagrywanie filmu na dysk jednej z dostępnych rozdzielczości sensora,
 - udostępnianie serii klatek z kamerki w czasie rzeczywistym na webserwerze w sieci lokalnej.
@@ -50,40 +44,126 @@ Podział obowiązków w projekcie był następujący:
 
 # 2. Obsługa aplikacji
 
-Opis przycisków:
+## 2.1 Przypadki użycia
 
-Initialize Camera - pozwala na zainicjalizowanie działania sensora. Po naciśnięciu tego przyciisku w głównej części
-okna powinien pojawić się rzeczywisty obraz z kamery na pomarańczowym tle. Powinny również zostać odblokowane
-przyciski do przechwytu obrazu oraz przyciski do obsługi serwera http.
+Opis przypadków użycia dla aplikacji, która pozwala użytkownikowi na:
+
+1. Inicjalizację kamery.
+2. Zapis z kamery klatki.
+3. Rejestrację wideo.
+4. Uruchomienie serwera, na którym można odczytać aktualne video z kamery.
+
+### 2.1.1 Inicjalizacja kamery
+
+**Wsadzić obrazek z diagramem przypadków użycia**
+
+Opis: Użytkownik ma możliwość inicjalizacji kamery przed rozpoczęciem nagrywania 
+lub przesyłania obrazu przez serwer.
+
+Warunki wstępne: Aplikacja jest uruchomiona i kamera jest podłączona do komputera.
+
+Warunki końcowe: Kamera jest gotowa do nagrywania lub przesyłania obrazu.
+
+Scenariusz główny:
+
+1. Użytkownik naciska przycisk "Initialize camera".
+2. Aplikacja uruchamia kamerę.
+4. Aktualny obraz z kamery pojawia się na ekranie.
+
+Po naciśnięciu "Initialize camera" w głównej części okna powinien pojawić się rzeczywisty
+obraz z kamery na **pomarańczowym tle**. Powinny również zostać odblokowaneprzyciski do przechwytu
+obrazu oraz przyciski do obsługi serwera http.
+\newpage
 
 ![Widok kamery po inicjalizacji](../img/init.png)
-\newpage
 
-Capture image - pozwala na zatrzymanie klatki w danym momencie. Lista pod przyciskiem pozwala wybrać rozdzielczość
-przechwyconego obrazu. Zatrzymana klatka powinna pojawić się po prawej stronie na żółtym tle.
+### 2.1.2 Zapis obrazu na dysku twardym
+
+**Wsadzić obrazek z diagramem przypadków użycia**
+
+Opis: Użytkownik ma możliwość zapisania klatki z kamery na dysku lokalnym.
+
+Warunki wstępne: Kamera jest zainicjalizowana i gotowa do nagrywania.
+
+Warunki końcowe: Klatka z kamery zostaje zapisana na dysku lokalnym.
+
+Scenariusz główny:
+
+1. Użytkownik naciska przycisk "Capture Image".
+2. Aplikacja zatrzymuje klatkę i wyświetla ją na **żółtym tle** obok rzeczywistego podglądu
+obrazu kamery.
+3. Użytkownik wybiera z listy rozwijanej rozdzielczość zapisu klatki.
+4. Użytkownik naciska przycisk "Save image".
+5. Pojawia się nowe okno z wyborem miejsca zapisu na dysku.
+6. Użytkownik wybiera miejsce zapisu.
+7. Aplikacja zapisuje obraz z kamerki w wybranym miejscu na dusku.
+\newpage
 
 ![Widok przechwyconego zdjęcia](../img/capture.png)
-\newpage
 
-Save captured image - pozwala na zapis klatki w postaci zdjęcia w wybranym przez użytkownika folderze (file dialog).
+\newpage
 
 ![Widok okna wyboru folderu do zapisu zdjęcia](../img/pic.png)
-\newpage
 
-Make video - rozpoczyna nagrywanie wideo w ustalonej przez użytkownika rozdzielczości w liście poniżej. Powinno pojawić
-się nowe okno z podglądem nagrania. Wyjście z tego okna przerywa nagranie.
+### 2.1.3 Nagrywanie wideo
 
-Whatch HQ - zaznaczenie powoduje, że oglądane wideo jest w rozdzielczości HD.
+**Wsadzić obrazek z diagramem przypadków użycia**
+
+Opis: Użytkownik ma możliwość rozpoczęcia nagrywania wideo z kamery.
+
+Warunki wstępne: Kamera jest zainicjalizowana i gotowa do nagrywania.
+
+Warunki końcowe: Nagrywanie wideo zostaje zakończone.
+
+Scenariusz główny:
+
+1. Użytkownik naciska przycisk "Record video".
+2. Użytkownik wybiera z listy rozwijanej inną rozdzielczość nagrywania.
+3. Aplikacja otwiera nowe okno z podglądem nagrywanego wideo z kamery.
+4. Użytkownik przytrzymuje klawisz __Esc__.
+5. Aplikacja kończy nagrywanie wideo i zapisuje je na dysku twardym.
 
 ![Widok nagrywanego wideo](../img/video.png)
+
 \newpage
 
-Start http stream server - pozwana na rozpoczęcie udostępniania obrazu z kamery w sieci lokalnej.
-Stop http stream server - pozwana na przerwanie udostępniania obrazu z kamery w sieci lokalnej.
-Pod przyciskiem "Stop http stream server" można wybrać adres IP, na jaki zostanie udostępniony
-obraz kamery.
+### 2.1.4 Uruchomienie serwera HTTP
 
+**Wsadzić obrazek z diagramem przypadków użycia**
+
+Opis: Użytkownik ma możliwość uruchomienia serwera, na którym będzie dostępne aktualne
+video z kamery.
+
+Warunki wstępne: Kamera jest zainicjalizowana i gotowa do nagrywania lub przesyłania obrazu,
+a wcześniej zostało już zainstalowane oprogramowanie serwera.
+
+Warunki końcowe: Serwer jest uruchomiony i wyświetla aktualne video z kamery.
+
+Scenariusz główny:
+
+1. Użytkownik naciska przycisk "Start http stream server".
+2. Użytkownik wybiera adres IP, na jaki zostanie udostępniony obraz kamery.
+3. Aplikacja uruchamia serwer.
+4. Serwer wyświetla aktualne video z kamery na lokalnej stronie.
+5. Inny użytkownik może przeglądać aktualne video na lokalnej stronie.
+\newpage
 ![Widok udostępnionego obrazu przez protokół http](../img/http.png)
+
+### 2.1.5 Zatrzymanie serwera HTTP
+
+**Wsadzić obrazek z diagramem przypadków użycia**
+
+Opis: Użytkownik ma możliwość zatrzymania serwera.
+
+Warunki wstępne: Serwer jest uruchomiony.
+
+Warunki końcowe: Serwer jest zatrzymany.
+
+Scenariusz główny:
+
+1. Użytkownik naciska przycisk "Stop http stream server".
+2. Aplikacja zatrzymuje serwer.
+3. Inny użytkownik przestaje widzieć aktualny obraz z kamery z sieci lokalnej.
 
 # 3. Rozwiązania implementacyjne CameraRaspberry
 
@@ -100,7 +180,10 @@ Technologie zastosowane w projekcie to:
 ![Diagram klas](../img/uml.png)
 \newpage
 
-## 3.3. Wielowątkowość
+## 3.3 Wielowątkowość
+
+### 3.3.1 Schemat ogólny działania wielowątkowego
+
 Aby program działał prawidłowo. Należało poszczególne części programu uruchamiać w osobnych
 wątkach. Te części to:
 
@@ -108,6 +191,15 @@ wątkach. Te części to:
 - zapis poszczególnych klatek,
 - rejestracja wideo,
 - transmisja zapisanych klatek na serwerze HTTP.
+
+![schemat pracy wielowątkowej](../img/threads.png)
+
+Legenda:
+
+- elipsy oznaczają poszczególne wątki
+- prostokąt oznacza zasób
+
+### 3.3.2 Implementacja w języku Java
 
 Aby program mógł działać wielowątkowo, klasa z metodą, którą chcemy uruchomić w nowym wątku musi
 implementować w języku Java interfejs ```Runnable``` oraz zaimplementować metodę ```run()``` która
