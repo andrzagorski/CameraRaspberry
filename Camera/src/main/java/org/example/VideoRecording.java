@@ -70,7 +70,7 @@ public class VideoRecording {
                         }
 
 
-                        int fourcc = VideoWriter.fourcc('h', '2', '6', '4'); // format wideo
+                        int fourcc = VideoWriter.fourcc('m', 'p', '4', 'v'); // format wideo
                         String sciezka = file.toString();
                         VideoWriter videoWriter;
                         if (!sciezka.contains(".mp4")) {
