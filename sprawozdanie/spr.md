@@ -18,7 +18,7 @@ header-includes: |
 	\end{raggedleft}
 \end{vfill} -->
 
-![strona tytulowa](../img/title.png)
+![strona tytulowa](../Camera/img/title.png)
 \newpage
 
 # 1. Wstęp
@@ -45,7 +45,6 @@ Podział obowiązków w projekcie był następujący:
 # 2. Obsługa aplikacji
 
 ## 2.1 Przypadki użycia
-
 Opis przypadków użycia dla aplikacji, która pozwala użytkownikowi na:
 
 1. Inicjalizację kamery.
@@ -54,9 +53,6 @@ Opis przypadków użycia dla aplikacji, która pozwala użytkownikowi na:
 4. Uruchomienie serwera, na którym można odczytać aktualne video z kamery.
 
 ### 2.1.1 Inicjalizacja kamery
-
-**Wsadzić obrazek z diagramem przypadków użycia**
-
 Opis: Użytkownik ma możliwość inicjalizacji kamery przed rozpoczęciem nagrywania 
 lub przesyłania obrazu przez serwer.
 
@@ -73,14 +69,14 @@ Scenariusz główny:
 Po naciśnięciu "Initialize camera" w głównej części okna powinien pojawić się rzeczywisty
 obraz z kamery na **pomarańczowym tle**. Powinny również zostać odblokowaneprzyciski do przechwytu
 obrazu oraz przyciski do obsługi serwera http.
+
+![Diagram przypadków użycia - inicjalizacja](../Camera/img/init_d.png)
+
+![Widok kamery po inicjalizacji](../Camera/img/init.png)
+
 \newpage
 
-![Widok kamery po inicjalizacji](../img/init.png)
-
 ### 2.1.2 Zapis obrazu na dysku twardym
-
-**Wsadzić obrazek z diagramem przypadków użycia**
-
 Opis: Użytkownik ma możliwość zapisania klatki z kamery na dysku lokalnym.
 
 Warunki wstępne: Kamera jest zainicjalizowana i gotowa do nagrywania.
@@ -97,18 +93,16 @@ obrazu kamery.
 5. Pojawia się nowe okno z wyborem miejsca zapisu na dysku.
 6. Użytkownik wybiera miejsce zapisu.
 7. Aplikacja zapisuje obraz z kamerki w wybranym miejscu na dusku.
+
+![Diagram przypadków użycia - zapis](../Camera/img/save.png)
+
+![Widok przechwyconego zdjęcia](../Camera/img/capture.png)
+
+![Widok okna wyboru folderu do zapisu zdjęcia](../Camera/img/pic.png)
+
 \newpage
-
-![Widok przechwyconego zdjęcia](../img/capture.png)
-
-\newpage
-
-![Widok okna wyboru folderu do zapisu zdjęcia](../img/pic.png)
 
 ### 2.1.3 Nagrywanie wideo
-
-**Wsadzić obrazek z diagramem przypadków użycia**
-
 Opis: Użytkownik ma możliwość rozpoczęcia nagrywania wideo z kamery.
 
 Warunki wstępne: Kamera jest zainicjalizowana i gotowa do nagrywania.
@@ -123,14 +117,13 @@ Scenariusz główny:
 4. Użytkownik przytrzymuje klawisz __Esc__.
 5. Aplikacja kończy nagrywanie wideo i zapisuje je na dysku twardym.
 
-![Widok nagrywanego wideo](../img/video.png)
+![Diagram przypadków użycia - nagrywanie](../Camera/img/video_d.png)
+
+![Widok nagrywanego wideo](../Camera/img/video.png)
 
 \newpage
 
 ### 2.1.4 Uruchomienie serwera HTTP
-
-**Wsadzić obrazek z diagramem przypadków użycia**
-
 Opis: Użytkownik ma możliwość uruchomienia serwera, na którym będzie dostępne aktualne
 video z kamery.
 
@@ -146,13 +139,14 @@ Scenariusz główny:
 3. Aplikacja uruchamia serwer.
 4. Serwer wyświetla aktualne video z kamery na lokalnej stronie.
 5. Inny użytkownik może przeglądać aktualne video na lokalnej stronie.
+
+![Diagram przypadków użycia - http start](../Camera/img/http_start_d.png)
+
 \newpage
-![Widok udostępnionego obrazu przez protokół http](../img/http.png)
+
+![Widok udostępnionego obrazu przez protokół http](../Camera/img/http.png)
 
 ### 2.1.5 Zatrzymanie serwera HTTP
-
-**Wsadzić obrazek z diagramem przypadków użycia**
-
 Opis: Użytkownik ma możliwość zatrzymania serwera.
 
 Warunki wstępne: Serwer jest uruchomiony.
@@ -165,19 +159,29 @@ Scenariusz główny:
 2. Aplikacja zatrzymuje serwer.
 3. Inny użytkownik przestaje widzieć aktualny obraz z kamery z sieci lokalnej.
 
+![Diagram przypadków użycia - http stop](../Camera/img/http_stop_d.png)
+
 # 3. Rozwiązania implementacyjne CameraRaspberry
 
 ## 3.1 Technologia użyta w projekcie
 Technologie zastosowane w projekcie to:
 
-- Java oraz jej elementy biblioteki standardowej
-(w sczególności te pozwalające na bezpieczne używanie wielu wątków),
+Java oraz jej elementy biblioteki standardowej (w sczególności te pozwalające na bezpieczne
+używanie wielu wątków):
+
+- Runnable
+- Thread
+- AtomicBoolean
+- Socket
+
+Oraz dodatkowe biblioteki:
+
 - Swing,
 - AWT,
 - OpenCV
 
 ## 3.2 Diagram klas
-![Diagram klas](../img/uml.png)
+![Diagram klas](../Camera/img/uml.png)
 \newpage
 
 ## 3.3 Wielowątkowość
@@ -192,7 +196,7 @@ wątkach. Te części to:
 - rejestracja wideo,
 - transmisja zapisanych klatek na serwerze HTTP.
 
-![schemat pracy wielowątkowej](../img/threads.png)
+![schemat pracy wielowątkowej](../Camera/img/threads.png)
 
 Legenda:
 
