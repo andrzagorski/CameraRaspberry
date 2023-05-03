@@ -28,11 +28,6 @@ import static org.opencv.highgui.HighGui.destroyAllWindows;
 	oraz cały frontend z oknem i funkcjonalnymi przyciskami. Na początku rozmiar głównego okna to 640x480
 */
 public class Main {
-	//! Szerokość wyświetlanego okna
-    static int PREV_WIDTH= 640;
-
-	//! Wysokość wyświetlanego okna
-    static int PREV_HEIGHT=480;
 
 	//! Oktet A adresu IP.
     static int OCT_A=157;
@@ -68,8 +63,9 @@ public class Main {
         JbuttonSaveCaptured.setEnabled(false); // cannot grab image before choosing camera.
         jButtonGrab.setBounds(20, 140, 130, 20);
 
-        JComboBox<SelectedResolution.ResolutionOption> RecordResolution = new JComboBox<>(SelectedResolution.ResolutionOption.values());
-        JCheckBox watchHQCheckBox = new JCheckBox("Watch HQ");
+        JButton stopRecord = new JButton("stop recording");
+        stopRecord.setEnabled(false);
+
         JComboBox<SelectedResolution.ResolutionOption> CaptureImageResolution = new JComboBox<>(SelectedResolution.ResolutionOption.values());
         SpinnerNumberModel model = new SpinnerNumberModel(OCT_A, 0, 255, 1); // zakres od 0 do 255 z krokiem 1
         SpinnerNumberModel model2 = new SpinnerNumberModel(OCT_B, 0, 255, 1); // zakres od 0 do 255 z krokiem 1
@@ -80,7 +76,6 @@ public class Main {
         JSpinner thirdOctetIp = new JSpinner(model3);
         JSpinner fourthOctetIp = new JSpinner(model4);
 
-        RecordResolution.setSelectedIndex(0);
         CaptureImageResolution.setSelectedIndex(0);
 
         JButton JBtnStartHttpServices = new JButton("Start Http Stream Server");
@@ -99,9 +94,7 @@ public class Main {
 
         JPanel videoPanel = new JPanel(new GridLayout(3, 0));
         videoPanel.add(jButtonStartRecord); // Make video
-        videoPanel.add(RecordResolution);
-        videoPanel.add(watchHQCheckBox);
-        videoPanel.setBackground(Color.DARK_GRAY);
+        videoPanel.add(stopRecord);
 
         JPanel imagePanel = new JPanel(new GridLayout(3, 0));
         imagePanel.add(jButtonGrab); // Capture Image!
@@ -166,14 +159,29 @@ public class Main {
         window.setVisible(true);
         window.pack();
         final FrameGrabber[] cam = new FrameGrabber[1]; // current camera
+        cam[0]= new OpenCVFrameGrabber(0);
+
 
         final Frame[] GrabbedFrame = {null};
         jButtonChooseCamera.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                SelectedResolution.ResolutionOption CaptureResolution = (SelectedResolution.ResolutionOption)CaptureImageResolution.getSelectedItem();
+
+                try {
+                            InitCam.initialize(cam[0],CaptureResolution.getWidth() ,CaptureResolution.getHeight());
+                }
+                catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
+                catch (FrameGrabber.Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+
                 jButtonGrab.setEnabled(true);
                 JBtnStartHttpServices.setEnabled(true);
-                CaptureVideo.Capture(cam,priority,window,LeftSidePanel,PREV_WIDTH,PREV_HEIGHT,lock);
+                CaptureVideo.Capture(cam,priority,window,LeftSidePanel,CaptureResolution.getWidth(),CaptureResolution.getHeight(),lock);
             }
         });
         jButtonGrab.addActionListener(new ActionListener() {
@@ -183,20 +191,28 @@ public class Main {
 
                 SelectedResolution.ResolutionOption CaptureResolution = (SelectedResolution.ResolutionOption)CaptureImageResolution.getSelectedItem();
 
-                CaptureFrame.Capture(cam,GrabbedFrame,priority,window,RightSidePanel,PREV_WIDTH,PREV_HEIGHT,CaptureResolution.getWidth(), CaptureResolution.getHeight(), lock);
+                CaptureFrame.Capture(cam,GrabbedFrame,priority,window,RightSidePanel,CaptureResolution.getWidth(),CaptureResolution.getHeight(),CaptureResolution.getWidth(), CaptureResolution.getHeight(), lock);
             }
         });
+
         jButtonStartRecord.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+                SelectedResolution.ResolutionOption CaptureResolution = (SelectedResolution.ResolutionOption)CaptureImageResolution.getSelectedItem();
 
-                SelectedResolution.ResolutionOption RecordingResolution = (SelectedResolution.ResolutionOption)RecordResolution.getSelectedItem();
-                Boolean showInHQ = watchHQCheckBox.isSelected();
-                VideoRecording.Record(cam,GrabbedFrame,priority,showInHQ,window,RecordingResolution.getWidth(),RecordingResolution.getHeight(),10,100,lock);
+                VideoRecording.Record(cam,GrabbedFrame,priority,window,CaptureResolution.getWidth(),CaptureResolution.getHeight());
+                stopRecord.setEnabled(true);
 
             }
         });
+
+        stopRecord.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VideoRecording.stopRecording.set(true);
+            }
+        });
+
         JbuttonSaveCaptured.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -206,7 +222,6 @@ public class Main {
         JBtnStartHttpServices.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
                 CaptureVideo.startThreadStream();
                 CaptureVideo.httpstream=true;
                 JBtnStartHttpServices.setEnabled(false);
@@ -216,7 +231,6 @@ public class Main {
         JBtnStopHttpServices.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
                 CaptureVideo.StopStreamServer();
                 JBtnStartHttpServices.setEnabled(true);
                 JBtnStopHttpServices.setEnabled(false);

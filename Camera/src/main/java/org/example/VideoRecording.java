@@ -1,115 +1,72 @@
 package org.example;
 
+import org.bytedeco.ffmpeg.global.avcodec;
 import org.bytedeco.javacv.*;
 import org.bytedeco.javacv.Frame;
-import org.opencv.core.*;
-import org.opencv.highgui.HighGui;
-import org.opencv.videoio.*;
 
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.opencv.videoio.VideoCapture;
 
-import static org.example.Main.PREV_HEIGHT;
-import static org.example.Main.PREV_WIDTH;
-import static org.opencv.highgui.HighGui.*;
-import static org.opencv.videoio.Videoio.CAP_PROP_FRAME_HEIGHT;
-import static org.opencv.videoio.Videoio.CAP_PROP_FRAME_WIDTH;
+import static org.bytedeco.opencv.helper.opencv_imgcodecs.cvLoadImage;
 
 /**
-	\file VideoRecording.java
-	\brief Plik klasą VideoRecording.
+ \file VideoRecording.java
+ \brief Plik klasą VideoRecording.
 */
 
 /**
-	\brief Klasa abstrachująca proces cyklicznego przechwytywania klatek
+ \brief Klasa abstrachująca proces cyklicznego przechwytywania klatek
 
-	i zapisu klatek w postaci wideo.
+ i zapisu klatek w postaci wideo.
 */
 public class VideoRecording {
+    static OpenCVFrameConverter.ToIplImage grabberConverter = new OpenCVFrameConverter.ToIplImage();
+   public static AtomicBoolean stopRecording = new AtomicBoolean(false);
 
-    static {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-    }
-
-	//! Główna funkcja nagrywająca
-    static void Record(FrameGrabber[] cam, Frame[] GrabbedFrame, AtomicBoolean priorityQueue,Boolean showHQ, CanvasFrame window, int RecordWidth, int RecordHeight, int fps, int recordingTime, Object lock) {
+    //! Główna funkcja nagrywająca
+    static void Record(FrameGrabber[] cam, Frame[] GrabbedFrame, AtomicBoolean priorityQueue, CanvasFrame window, int RecordWidth, int RecordHeight) {
         Runnable runnableRecordingVideo = new Runnable() {
 
             @Override
             public void run() {
-
-                priorityQueue.set(true);
 
                 File file = null;
                 JFileChooser fileChooser = new JFileChooser();
                 if (fileChooser.showSaveDialog(window) == JFileChooser.APPROVE_OPTION) {
                     file = fileChooser.getSelectedFile();
 
-
-                    synchronized (lock) {
                         try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException ex) {
-                            throw new RuntimeException(ex);
+                            FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(file+".mp4",RecordWidth,RecordHeight);
+                            recorder.setFrameRate(24);
+                            recorder.setVideoCodec(avcodec.AV_CODEC_ID_MPEG4);
+                            recorder.setVideoBitrate(9000);
+                            recorder.setFormat("mp4");
+                            recorder.setVideoQuality(0); // maximum quality
+                            recorder.start();
+
+                            while(!stopRecording.get())
+                            {
+                                recorder.record(grabberConverter.convert(CaptureVideo.img2));
+                                try {
+                                    Thread.sleep(50);
+                                } catch (InterruptedException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                                System.out.println("Trwa Nagrywanie");
+                            }
+                            recorder.stop();
+                            recorder.release();
                         }
-
-                        Size frameSize = new Size(RecordWidth, RecordHeight); // this res work with external cam.
-
-                        VideoCapture videoCapture = new VideoCapture(0);
-
-                        if(showHQ){
-                            videoCapture.set(CAP_PROP_FRAME_WIDTH, frameSize.width);
-                            videoCapture.set(CAP_PROP_FRAME_HEIGHT, frameSize.height);
+                        catch (org.bytedeco.javacv.FrameRecorder.Exception e){
+                            e.printStackTrace();
                         }
-                        else {
-                            videoCapture.set(CAP_PROP_FRAME_WIDTH, PREV_WIDTH);
-                            videoCapture.set(CAP_PROP_FRAME_HEIGHT, PREV_HEIGHT);
-                        }
-
-
-                        int fourcc = VideoWriter.fourcc('m', 'p', '4', 'v'); // format wideo
-                        String sciezka = file.toString();
-                        VideoWriter videoWriter;
-                        if (!sciezka.contains(".mp4")) {
-                            sciezka += ".mp4";
-                        }
-                        videoWriter = new VideoWriter(sciezka, fourcc, fps, frameSize, true);
-
-
-                        Mat frame = new Mat();
-
-
-                        HighGui.namedWindow("windowName", HighGui.WINDOW_NORMAL);
-
-                        while (true) {
-                            videoCapture.read(frame);
-                            videoWriter.write(frame);
-
-                            System.out.println(frame.height() + " " + frame.width());
-
-
-                            HighGui.imshow("windowName", frame);
-
-                            //HighGui.destroyAllWindows();  // tu zamyka
-
-                            if (waitKey(1) == 27) {
-                                HighGui.destroyAllWindows();  // nie zamyka
-                                break;
-                            } // Przerwanie nagrywania po naciśnięciu klawisza Esc
-
-                        }
-                        HighGui.destroyAllWindows(); // nie zamyka
-
-                        videoCapture.release();
-                        videoWriter.release();
-                        priorityQueue.set(false);
-                        lock.notifyAll();
                     }
-                } else priorityQueue.set(false);
-            }
+                }
+
         };
         try {
             new Thread(runnableRecordingVideo).start();

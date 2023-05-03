@@ -23,7 +23,7 @@ public class HttpStreamServer implements Runnable {
     private ServerSocket serverSocket;
 
     //! Socket do komunikacji sieciowej.
-    private Socket socket;
+    private Socket[] sockets = new Socket[2];
 
     //! String ustawiający odpowiednio transmisję.
     private final String boundary = "stream";
@@ -48,8 +48,10 @@ public class HttpStreamServer implements Runnable {
 
         InetAddress addr = InetAddress.getByName(octA+"."+octB+"."+octC+"."+octD); // specify address.
         serverSocket = new ServerSocket(8080, 50, addr);
-        socket = serverSocket.accept();
-        writeHeader(socket.getOutputStream(), boundary);
+        for (int i = 0; i < sockets.length; i++) {
+            sockets[i] = serverSocket.accept();
+            writeHeader(sockets[i].getOutputStream(), boundary);
+        }
     }
 
     //! Funkcja wpisująca niezbędne parametry do działania serwera.
@@ -67,7 +69,7 @@ public class HttpStreamServer implements Runnable {
     }
 
     //! Funkcja wysyłająca obraz z kamery na serwer.
-    public void pushImage(BufferedImage frame) throws IOException {
+    public void pushImage(BufferedImage frame, Socket socket) throws IOException {
         if (frame == null)
             return;
         try {
@@ -92,7 +94,9 @@ public class HttpStreamServer implements Runnable {
             System.out.print("go with browser to: "+octA+"."+octB+"."+octC+"."+octD+":8080");
             startStreamingServer();
             while (true) {
-                pushImage(imag);
+                for (int i = 0; i < sockets.length; i++) {
+                    pushImage(imag, sockets[i]);
+                }
             }
         } catch (IOException e) {
             return;
@@ -101,7 +105,9 @@ public class HttpStreamServer implements Runnable {
 
     //! Funkcja zatrzymująca serwer HTTP.
     public void stopStreamingServer() throws IOException {
-        socket.close();
+        for (int i = 0; i < sockets.length; i++) {
+            sockets[i].close();
+        }
         serverSocket.close();
     }
 
