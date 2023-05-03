@@ -39,17 +39,8 @@ public class CaptureFrame {
 
                 synchronized (lock){
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(500);
                     } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-
-                    //grabbing an image.
-                    try {
-                        InitCam.initialize(cam[0],MAX_WIDTH , MAX_HEIGHT);
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (FrameGrabber.Exception ex) {
                         throw new RuntimeException(ex);
                     }
 
@@ -74,13 +65,6 @@ public class CaptureFrame {
                         throw new RuntimeException(ex);
                     }
 
-                    try {
-                        InitCam.initialize(cam[0], prevWidth, prevHeight);
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (FrameGrabber.Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
                     priorityQueue.set(false);
                     lock.notifyAll();
                 }

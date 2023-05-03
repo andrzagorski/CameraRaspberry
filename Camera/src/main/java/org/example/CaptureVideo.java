@@ -25,16 +25,17 @@ public class CaptureVideo {
     public static boolean httpstream = false;
 
 	//! Obiekt klasy HttpStreamServer do transmisji na serwer HTTP.
-    private static HttpStreamServer httpStreamService= new HttpStreamServer(OCT_A,OCT_B,OCT_C,OCT_D);
+    private static HttpStreamServer httpStreamService= null;
 
 	//! Główny wątek transmisji HTTP.
     private static Thread httpStreamThread;
 
-	//! Obiekt klasy VideoCapture do przechwytu wideo
-    static VideoCapture videoCapture;
+    public static IplImage img2= null;
+
 
 	//! Funkcja rozpoczynająca transmisję HTTP.
     public static void  startThreadStream() {
+        httpStreamService= new HttpStreamServer(OCT_A,OCT_B,OCT_C,OCT_D);
         httpStreamThread = new Thread(httpStreamService);
         httpStreamThread.start();
     }
@@ -69,25 +70,11 @@ public class CaptureVideo {
             @Override
             public void run() {
 
-                if (cam[0] != null) { // if camera is already allocated -> case when camera is switched to another
-                    try {
-                        cam[0].close();
-                    } catch (FrameGrabber.Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    try {
-                        cam[0].release();
-                    } catch (FrameGrabber.Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-                cam[0] = new OpenCVFrameGrabber(0);
-
                 synchronized (lock) {
                     try {
-                        InitCam.initialize(cam[0], prevWidth, prevHeight);
-                    } catch (InterruptedException | FrameGrabber.Exception ex) {
-                        ex.printStackTrace();
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
 
                     while (true) {
@@ -106,19 +93,18 @@ public class CaptureVideo {
                             throw new RuntimeException(ex);
                         }
 
-
                         canvasFrame.showImage(frame);
                         canvasFrame.setCanvasSize(640,480);
                         window.revalidate();
 
-                        IplImage img2 = converter.convert(frame);
+                         img2 = converter.convert(frame);
 
                         if(httpstream) {
                             httpStreamService.imag = toBufferedImage(img2);
                         }
 
                         try {
-                            Thread.sleep(50);
+                            Thread.sleep(250);
                         } catch (InterruptedException ex) {
                             throw new RuntimeException(ex);
                         }
